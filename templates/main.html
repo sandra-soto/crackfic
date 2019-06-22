@@ -1,0 +1,15 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='main.css')}}" /> 
+</head>
+ <!-- connecting the main.css file to this file  in the head -->
+   <body>
+      <form action = "/search" method = "POST">
+         <p>Enter a search category:</p>
+         <p><input type = "text" name = "search_category" /></p>
+         <p><input type = "submit" value = "search" /></p>
+      </form>
+   </body>
+</html>

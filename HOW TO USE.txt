@@ -1,0 +1,17 @@
+DIRECTORIES / FILES
+* static folder contains CSS and javascript files
+* templates contains html files
+
+APP.PY
+* contains the meat of the application
+
+HOW TO TEST THE APP WITHOUT PUSHING TO GITHUB
+* click on app.py (not in IDLE, as a program)
+* go on your browser and type in localhost:5000 as the url
+
+HOW TO TEST HTML
+* just click on the html file
+
+DONT TOUCH -- STUFF FOR HEROKU
+* procfile
+* requirements
