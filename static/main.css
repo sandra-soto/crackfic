@@ -5,29 +5,28 @@
   margin: auto;
 }
 </style>
+
 <body>
 
-<div class="content">
-  input[type=text] {
+input[type=text] {
+  border: none;
+  border-bottom: 2px solid #3CBC8D;
+}
+input[type=text]:focus {
+  background-color: lightblue;
+}
+
+input[type="submit"] {
+    width: 200px;
+    height: 50px;
+    font-size: 24px;
+    font-family: monospace;
     border: none;
-    border-bottom: 2px solid #3CBC8D;
-  }
-  input[type=text]:focus {
-    background-color: lightblue;
-  }
+    border-radius: 10px;
+}
 
-  input[type="submit"] {
-      width: 200px;
-      height: 50px;
-      font-size: 24px;
-      font-family: monospace;
-      border: none;
-      border-radius: 10px;
-  }
-
-  input[type="submit"]:hover { 
-    background-color: yellow;
-  }
-</div>
+input[type="submit"]:hover { 
+  background-color: yellow;
+}
 
 </body>
