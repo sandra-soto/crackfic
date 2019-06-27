@@ -92,7 +92,7 @@ def story_retrieve(copylist):
             else:
                 
                 if storyid not in stories:
-                    if metadata['num_words'] < 5000:
+                    if metadata['num_words'] < 1000:
                         stories[storyid] = metadata
                         story = scraper.scrape_story(storyid)
                         #print(story)
