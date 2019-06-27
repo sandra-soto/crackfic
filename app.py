@@ -17,7 +17,7 @@ def search():
 
 @app.route('/success/<name>') # this will redirect us to a successful search
 def success(name): 
-   return 'This category is ' + str(len(name))+ 'characters long' + 'welcome %s' % name 
+   return "Success! Input = " + name
 
 
 if __name__ == '__main__':
