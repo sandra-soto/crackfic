@@ -11,11 +11,14 @@
    </style>
 </head>
     <body>
-    	<select name = category_list  method="GET" action = "/<name>">
-    		<!-- Dropdown list of all inputs of a category -->
-        {% for subcategory in category_list %}
-        <option value = "{{subcategory}}" SELECTED>{{subcategory}}</option>
-        {% endfor %}
-      </select>
+      <div class="center">
+      	<select name = category_list  method="GET" action = "/<name>">
+      		<!-- Dropdown list of all inputs of a category -->
+          <option value="{{category_list[0]}}" selected>{{category_list[0]}}</option>
+          {% for subcategory in category_list[1:] %}
+            <option value = "{{subcategory}}">{{subcategory}}</option>
+          {% endfor %}
+        </select>
+      </div>
     </body>
 </html>

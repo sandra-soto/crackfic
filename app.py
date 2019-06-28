@@ -20,12 +20,11 @@ def search():
 
 @app.route('/<name>', methods = ['GET']) # this will redirect us to a successful search
 def success(name):
-    if name == 'anime':
-        category_url = subcategory.main_category('anime/')
-        category_list = subcategory.generate_subs(category_url)
-        return render_template('inside_main_category.html',category_list = category_list)
-    else:
-        return "Still in progress! Page = " + name
+    if name[-1] == "s":
+        name = name[:-1]
+    category_url = subcategory.main_category(name+'/')
+    category_list = subcategory.generate_subs(category_url)
+    return render_template('inside_main_category.html',category_list = category_list)
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes
