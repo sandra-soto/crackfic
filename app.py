@@ -3,6 +3,7 @@ import flask
 from flask import request, redirect, url_for, jsonify, render_template
 app = flask.Flask(__name__)
 
+import subcateg_list
 
 @app.route('/') # this is the main page
 def main():
@@ -23,14 +24,17 @@ def success(name):
     if request.method == 'GET':
         if name[-1] == "s":
             name = name[:-1]
-        category_url = subcategory.main_category(name+'/')
-        category_list = subcategory.generate_subs(category_url)
+        if name == "anime":
+            category_list = subcateg_list.anime_subcateg
+        else:
+            category_url = subcategory.main_category(name+'/')
+            category_list = subcategory.generate_subs(category_url)
         return render_template('inside_main_category.html',category_list = category_list)
     elif request.method == 'POST':
         if name[-1] == "s":
             name = name[:-1]
-        category_url = subcategory.main_category(name+'/')
-        category_list = subcategory.generate_subs(category_url)        
+        #category_url = subcategory.main_category(name+'/')
+        #category_list = subcategory.generate_subs(category_url)        
         fandom_selection = request.form['subcategory']
         fandom_selection = fandom_selection.replace('/',' ')
         return redirect(url_for('madlib', fandom = fandom_selection))
