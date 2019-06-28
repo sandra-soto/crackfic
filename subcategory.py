@@ -61,6 +61,4 @@ def generate_subs(url: str):
     #print((actualfinallist))
     return (sorted(actualfinallist))
 
-    
-#print(generate_subs('https://www.fanfiction.net/anime'))
 

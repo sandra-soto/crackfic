@@ -24,11 +24,8 @@ def success(name):
     if request.method == 'GET':
         if name[-1] == "s":
             name = name[:-1]
-        if name == "anime":
-            category_list = subcateg_list.anime_subcateg
-        else:
-            category_url = subcategory.main_category(name+'/')
-            category_list = subcategory.generate_subs(category_url)
+        category_list_str = f'subcateg_list.{name}_subcateg'
+        category_list = eval(category_list_str)
         return render_template('inside_main_category.html',category_list = category_list)
     elif request.method == 'POST':   
         fandom_selection = request.form['subcategory']
