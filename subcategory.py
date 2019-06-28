@@ -38,6 +38,6 @@ def generate_subs(url: str, category: str):
             reallyfinal.append(str(i))
             
     
-    print(reallyfinal)
+    return (reallyfinal)
         
 
