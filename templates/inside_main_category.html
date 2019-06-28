@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset ="UTF-8">
+  <title>Dropdown</title>
+    <style>
+   	.center {
+   		text-align: center;
+   		padding: 70px 0;
+   	}
+   </style>
+</head>
+    <body>
+    	<select name = category_list  method="GET" action = "/<name>">
+    		<!-- Dropdown list of all inputs of a category -->
+        {% for subcategory in category_list %}
+        <option value = "{{subcategory}}" SELECTED>{{subcategory}}</option>
+        {% endfor %}
+      </select>
+    </body>
+</html>

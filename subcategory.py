@@ -14,7 +14,7 @@ def generate_subs(url: str):
     response = urllib.request.urlopen(url)
     data = response.read()
     response.close()
-    text = data.decode()
+    text = data.decode('utf-8')
     x = text.split()
     categoryset = list()
     for i in x:

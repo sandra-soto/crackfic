@@ -1,33 +1,16 @@
 /* feel free to change any of this garbage, just here for example */
-<style>
-.content {
-  max-width: 500px;
-  margin: auto;
-}
-</style>
-<body>
 
-<div class="content">
-  input[type=text] {
+/* Designs button layout */
+input[type="submit"] {
+    width: 200px;
+    height: 50px;
+    font-size: 24px;
+    font-family: monospace;
     border: none;
-    border-bottom: 2px solid #3CBC8D;
-  }
-  input[type=text]:focus {
-    background-color: lightblue;
-  }
+    border-radius: 10px;
+}
 
-  input[type="submit"] {
-      width: 200px;
-      height: 50px;
-      font-size: 24px;
-      font-family: monospace;
-      border: none;
-      border-radius: 10px;
-  }
-
-  input[type="submit"]:hover { 
-    background-color: yellow;
-  }
-</div>
-
-</body>
+/* Colors when cursor goes over to signify what it's on */
+input[type="submit"]:hover { 
+  background-color: #add8e6;
+}

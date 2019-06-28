@@ -1,5 +1,6 @@
+import subcategory
 import flask
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, jsonify, render_template
 app = flask.Flask(__name__)
 
 
@@ -9,15 +10,20 @@ def main():
     #^^^^ this will render the main.html file
     #in the templates folder
 
-@app.route('/search',methods = ['POST']) # this is an "html form"
+@app.route('/search',methods = ['GET','POST']) # this is an "html form"
 def search():
     if request.method == 'POST':
-        search_category = request.form['search_category']
-        return redirect(url_for('success', name = search_category))
+        search_category = request.form['searcher']
+        return redirect(url_for('success', name = search_category.lower()))
+    elif request.method == 'GET':
+        return render_template('main.html')
 
-@app.route('/success/<name>') # this will redirect us to a successful search
-def success(name): 
-   return "Success! Input = " + name
+@app.route('/<name>', methods = ['GET']) # this will redirect us to a successful search
+def success(name):
+    if name == 'anime':
+        category_url = subcategory.main_category('anime/')
+        category_list = subcategory.generate_subs(category_url)
+        return render_template('inside_main_category.html',category_list = category_list)
 
 
 if __name__ == '__main__':
