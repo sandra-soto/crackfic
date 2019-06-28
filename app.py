@@ -18,13 +18,26 @@ def search():
     elif request.method == 'GET':
         return render_template('main.html')
 
-@app.route('/<name>', methods = ['GET']) # this will redirect us to a successful search
+@app.route('/<name>', methods = ['GET','POST']) # this will redirect us to a successful search
 def success(name):
-    if name[-1] == "s":
-        name = name[:-1]
-    category_url = subcategory.main_category(name+'/')
-    category_list = subcategory.generate_subs(category_url)
-    return render_template('inside_main_category.html',category_list = category_list)
+    if request.method == 'GET':
+        if name[-1] == "s":
+            name = name[:-1]
+        category_url = subcategory.main_category(name+'/')
+        category_list = subcategory.generate_subs(category_url)
+        return render_template('inside_main_category.html',category_list = category_list)
+    elif request.method == 'POST':
+        if name[-1] == "s":
+            name = name[:-1]
+        category_url = subcategory.main_category(name+'/')
+        category_list = subcategory.generate_subs(category_url)        
+        fandom_selection = request.form['subcategory']
+        fandom_selection = fandom_selection.replace('/',' ')
+        return redirect(url_for('madlib', fandom = fandom_selection))
+
+@app.route('/madlib/<fandom>')
+def madlib(fandom):
+    return "Welcome  to the madlib page for " + fandom
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes
