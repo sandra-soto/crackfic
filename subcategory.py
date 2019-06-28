@@ -12,7 +12,7 @@ def main_category(category: str):
     return official_url + category
 
 
-def generate_subs(url: str, category: str):
+def generate_subs(url: str):
     '''return list of subcategories. **UPDATED**'''
     #subcats = []
     page = requests.get(url)
