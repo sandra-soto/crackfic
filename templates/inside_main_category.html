@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='main.css')}}" /> 
   <meta charset ="UTF-8">
   <title>Dropdown</title>
     <style>
    	.center {
    		text-align: center;
-   		padding: 70px 0;
-   	}
+   		padding: 150px 0;
+     	}
+
+    .dropdown .select select{
+      font-size: 20px;
+      background: #fff;
+      line-height: 1;
+      border: 1px solid #ccc;
+      padding: 10px 8px 10px 14px;
+      border-radius: 6px;
+      width: 50%;
+      font-family: monospace;
+      position: relative;
+    }
+    .dropdown option:hover{
+      background-color: #aec6cf;
+    }
+
    </style>
 </head>
     <body>
       <div class="center">
-      	<select name = category_list  method="GET" action = "/<name>">
+        <form name = category_list  method="POST" action = "/<name>">
       		<!-- Dropdown list of all inputs of a category -->
-          <option value="{{category_list[0]}}" selected>{{category_list[0]}}</option>
-          {% for subcategory in category_list[1:] %}
-            <option value = "{{subcategory}}">{{subcategory}}</option>
-          {% endfor %}
-        </select>
+            <div class="dropdown" id="dropdown">
+              <div class="select">
+                <select name = "subcategory">
+                  {% for subcategory in category_list %}
+                      <option value = "{{subcategory}}">{{subcategory}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          <p><input type = "submit" value = "Madlibify" /></p>
+        </form>
       </div>
     </body>
 </html>
