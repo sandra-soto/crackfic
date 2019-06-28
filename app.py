@@ -24,7 +24,8 @@ def success(name):
         category_url = subcategory.main_category('anime/')
         category_list = subcategory.generate_subs(category_url)
         return render_template('inside_main_category.html',category_list = category_list)
-
+    else:
+        return "Still in progress! Page = " + name
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes
