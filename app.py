@@ -30,11 +30,7 @@ def success(name):
             category_url = subcategory.main_category(name+'/')
             category_list = subcategory.generate_subs(category_url)
         return render_template('inside_main_category.html',category_list = category_list)
-    elif request.method == 'POST':
-        if name[-1] == "s":
-            name = name[:-1]
-        #category_url = subcategory.main_category(name+'/')
-        #category_list = subcategory.generate_subs(category_url)        
+    elif request.method == 'POST':   
         fandom_selection = request.form['subcategory']
         fandom_selection = fandom_selection.replace('/',' ')
         return redirect(url_for('madlib', fandom = fandom_selection))
