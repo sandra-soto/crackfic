@@ -38,7 +38,8 @@ def madlib(fandom):
     def generate():
       for i in range(10):
         yield "<br/>"
-    return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page('anime', fandom)
+        yield "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page('anime', fandom)
+    return Response(generate(), mimetype='text/html')
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes
