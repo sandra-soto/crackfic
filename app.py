@@ -1,4 +1,5 @@
 import subcategory
+import storyscrape as sc
 import flask
 from flask import request, redirect, url_for, jsonify, render_template
 app = flask.Flask(__name__)
@@ -34,7 +35,7 @@ def success(name):
 
 @app.route('/madlib/<fandom>')
 def madlib(fandom):
-    return "Welcome  to the madlib page for " + fandom
+    return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page('anime', fandom)
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes

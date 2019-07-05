@@ -49,6 +49,7 @@ def get_story_data(storyurl: str)->list:
 def get_story(storyurl):
     #gets actual story text
     '''takes the url of the story and gets the story written by whomever did so.'''
+    storyurl = 'https://www.fanfiction.net/' + storyurl
     page = requests.get(storyurl)
     soup = BeautifulSoup(page.content, 'html.parser')
     searchmax = soup.find_all('div', id = 'storytextp')
@@ -57,7 +58,7 @@ def get_story(storyurl):
 
 
 def generate_random_page(category: str,subcategory: str)-> list:
-    #takes a random page from the subcategory and pulls a list of stories from that page.
+    #takes a random page from the subcategory and pulls a list of stories from that page. list length is 25
     #there is the case that the story does not have more less 1k words on the page... needs to be resolved. 
     '''takes the main and sub category to generate a random page in which will return a list of stories for that page only.'''
     nsubcategory = subcategory.replace(' ', '-') #####done so it should work in generating the results.
@@ -74,8 +75,13 @@ def generate_random_page(category: str,subcategory: str)-> list:
     else:
         return pull_links(url)
 
-#print(generate_random_page('anime', 'Naruto'))
-        
+def random_story_in_page(category:str, subcategory:str)-> str:
+    '''returns a random story from a page, given category and subcategory'''
+    return get_story(generate_random_page(category, subcategory)[randint(0,24)])
+
+##print(len(generate_random_page('anime', 'Inuyasha')))
+##print(get_story(generate_random_page('anime','Naruto')[24]))
+#print(random_story_in_page('anime', 'Naruto'))
     
     
 
