@@ -81,6 +81,7 @@ def random_story_in_page(category:str, subcategory:str)-> str:
 
 ##print(len(generate_random_page('anime', 'Inuyasha')))
 ##print(get_story(generate_random_page('anime','Naruto')[24]))
+
 #print(random_story_in_page('anime', 'Naruto'))
     
     
