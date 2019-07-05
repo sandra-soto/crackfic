@@ -1,15 +1,89 @@
 import urllib.request
 from collections import defaultdict
-from fanfiction import Scraper
+#from fanfiction import Scraper
+from bs4 import BeautifulSoup
+from random import randint
+import requests
+
+def pull_links(url):
+    #just part of the bigger function, nothing to see here. 
+    '''this code is to be used in a for loop to get the link for each story present on a page. '''
+
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    sublinks = soup.find_all("a", class_ = 'stitle')
+    newlinks = []
+    for i in sublinks:
+        newlinks.append(str(i.get('href')))
+    return newlinks
 
 
-def build_url_search():
-    '''im hella lazy but when i do ill make a function that builds url based on search?? idk up to y'all. but every function here uses the URL given so I need to give each function a URL parameter, except the last function.'''
-    pass
+def get_pages(url):
+    #works when given the subcategory, like https://www.fanfiction.net/Anime/Naruto/' needs subcategory = Naruto like in this example.
+    #used in lower function, no need to worry about this. 
+    '''gives me the number of pages i need to go through to get stories ON A SPECIFIC PAGE. THE URL MUST HAVE THE NEW PAGE ADDED TO IT IF NECESSARY.'''
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    searchmax = soup.find_all('a')
+    for i in searchmax:
+        if str(i.text) == "Last":
+            x = int((str(i).index(";p=")))
+            finalindex = x + 3
+            #print(str(i)[finalindex:])
+            endindex = str(i)[finalindex:].index('"')
+            #print(str(i)[finalindex:][:endindex])
+            return int(str(i)[finalindex:][:endindex])
+
+#print(pull_links('https://www.fanfiction.net/anime/Alice-19th/'))
+#print(get_pages('https://www.fanfiction.net/anime/Naruto/'))
+
+def get_story_data(storyurl: str)->list:
+    #used to display where story is from and details regarding the story. 
+    '''gets author data of whomever wrote this particular story'''
+    page = requests.get(storyurl)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    searchdata = soup.find_all('span', class_='xgray xcontrast_txt')
+    return (str(searchdata[0].text).split("-"))
 
 
-def retrieve_page_one():
-    response = urllib.request.urlopen('https://www.fanfiction.net/anime/Alice-19th/') ### can make search query to generate url properly. will make function later to get different URLS. 
+def get_story(storyurl):
+    #gets actual story text
+    '''takes the url of the story and gets the story written by whomever did so.'''
+    page = requests.get(storyurl)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    searchmax = soup.find_all('div', id = 'storytextp')
+    for i in searchmax:
+        return (str(i.text))
+
+
+def generate_random_page(category: str,subcategory: str)-> list:
+    #takes a random page from the subcategory and pulls a list of stories from that page.
+    #there is the case that the story does not have more less 1k words on the page... needs to be resolved. 
+    '''takes the main and sub category to generate a random page in which will return a list of stories for that page only.'''
+    nsubcategory = subcategory.replace(' ', '-') #####done so it should work in generating the results.
+    ncategory = category.lower() ####works right with url
+    url = 'https://www.fanfiction.net/' + category + '/' + nsubcategory
+    #print(nsubcategory)
+    num_pages = get_pages(url)
+    select_page = randint(1, num_pages + 1)
+    #print(select_page)
+    if select_page > 1:
+        url = 'https://www.fanfiction.net/' + category + '/' + nsubcategory + '/' + '?&srt=1&r=103&p=' + str(select_page)
+        #print(url)
+        return pull_links(url)
+    else:
+        return pull_links(url)
+
+#print(generate_random_page('anime', 'Naruto'))
+        
+    
+    
+
+
+'''
+########################below this line is old code, don't think we need for the project. 
+def retrieve_page_one(url):
+    response = urllib.request.urlopen(url) ### can make search query to generate url properly. will make function later to get different URLS. 
     data = response.read()
     response.close()
     x = data.split()
@@ -20,7 +94,7 @@ def retrieve_page_one():
         if "href" not in str(i):
             newlist.append(count)
         count += 1
-
+    
     #print(newlist)
     # \/ this bs code adds for first page only. 
     for i in range(len(x)):
@@ -102,7 +176,7 @@ def story_retrieve(copylist):
         
     
 #^^^^^^^^ testing defaultdict shit. 
-
+'''
 
 
 
