@@ -5,12 +5,14 @@ from bs4 import BeautifulSoup
 from random import randint
 import requests
 
-def pull_links(url):
-    #just part of the bigger function, nothing to see here. 
-    '''this code is to be used in a for loop to get the link for each story present on a page. '''
-
+def get_soup(url):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
+    return soup
+
+def pull_links(url, soup):
+    #just part of the bigger function, nothing to see here. 
+    '''this code is to be used in a for loop to get the link for each story present on a page. '''
     sublinks = soup.find_all("a", class_ = 'stitle')
     newlinks = []
     for i in sublinks:
@@ -18,12 +20,10 @@ def pull_links(url):
     return newlinks
 
 
-def get_pages(url):
+def get_pages(url, soup):
     #works when given the subcategory, like https://www.fanfiction.net/Anime/Naruto/' needs subcategory = Naruto like in this example.
     #used in lower function, no need to worry about this. 
     '''gives me the number of pages i need to go through to get stories ON A SPECIFIC PAGE. THE URL MUST HAVE THE NEW PAGE ADDED TO IT IF NECESSARY.'''
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
     searchmax = soup.find_all('a')
     for i in searchmax:
         if str(i.text) == "Last":
@@ -65,15 +65,16 @@ def generate_random_page(category: str,subcategory: str)-> list:
     ncategory = category.lower() ####works right with url
     url = 'https://www.fanfiction.net/' + category + '/' + nsubcategory
     #print(nsubcategory)
-    num_pages = get_pages(url)
+    soup = get_soup(url)
+    num_pages = get_pages(url, soup)
     select_page = randint(1, num_pages + 1)
     #print(select_page)
     if select_page > 1:
         url = 'https://www.fanfiction.net/' + category + '/' + nsubcategory + '/' + '?&srt=1&r=103&p=' + str(select_page)
         #print(url)
-        return pull_links(url)
+        return pull_links(url, soup)
     else:
-        return pull_links(url)
+        return pull_links(url, soup)
 
 def random_story_in_page(category:str, subcategory:str)-> str:
     '''returns a random story from a page, given category and subcategory'''
