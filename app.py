@@ -35,9 +35,6 @@ def success(name):
 
 @app.route('/madlib/<fandom>')
 def madlib(fandom):
-    def generate():
-      for i in range(10):
-        yield "<br/>"
     return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page('anime', fandom)
 
 if __name__ == '__main__':
