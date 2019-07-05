@@ -1,7 +1,7 @@
 import subcategory
 import storyscrape as sc
 import flask
-from flask import request, redirect, url_for, jsonify, render_template
+from flask import request, redirect, url_for, jsonify, render_template, Response
 app = flask.Flask(__name__)
 
 import subcateg_list
