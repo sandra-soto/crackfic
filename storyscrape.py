@@ -78,11 +78,12 @@ def generate_random_page(category: str,subcategory: str)-> list:
 
 def random_story_in_page(category:str, subcategory:str)-> str:
     '''returns a random story from a page, given category and subcategory'''
-    return str(generate_random_page(category, subcategory))
+    return get_story('/s/13296820/1/RWBY-volume-7-transcript-idea')
+    #return str(generate_random_page(category, subcategory)) timeout on link genreation
     #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 
 ##print(len(generate_random_page('anime', 'Inuyasha')))
-##print(get_story(generate_random_page('anime','Naruto')[24]))
+#print(get_story(generate_random_page('anime','Naruto')))
 
 #print(random_story_in_page('anime', 'Naruto'))
     
