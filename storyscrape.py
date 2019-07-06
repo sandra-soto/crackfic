@@ -78,7 +78,8 @@ def generate_random_page(category: str,subcategory: str)-> list:
 
 def random_story_in_page(category:str, subcategory:str)-> str:
     '''returns a random story from a page, given category and subcategory'''
-    return get_story(generate_random_page(category, subcategory)[randint(0,24)])
+    return str(generate_random_page(category, subcategory))
+    #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 
 ##print(len(generate_random_page('anime', 'Inuyasha')))
 ##print(get_story(generate_random_page('anime','Naruto')[24]))
