@@ -1,1 +1,1 @@
-web: gunicorn app:app --timeout 290
+web: waitress-serve app:app
