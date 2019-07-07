@@ -41,4 +41,7 @@ def madlib(fandom):
 if __name__ == '__main__':
 ##    app.debug=True # this will give us an error message when the app crashes
 ##    app.run()
-    serve(app)
+    try:
+        serve(app)
+    except:
+        pass
