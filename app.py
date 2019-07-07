@@ -35,7 +35,7 @@ def success(name):
 
 @app.route('/madlib/<fandom>')
 def madlib(fandom):
-    return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page('anime', fandom)
+    return "Welcome  to the madlib page for " + fandom + '\n' + str(sc.random_story_in_page('anime', fandom))
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes

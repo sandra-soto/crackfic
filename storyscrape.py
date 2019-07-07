@@ -76,21 +76,11 @@ def generate_random_page(category: str,subcategory: str)-> list:
     else:
         return pull_links(url, soup)
 
-def random_story_in_page(category:str, subcategory:str)-> str:
-    '''returns a random story from a page, given category and subcategory'''
-    return get_story('/s/13296820/1/RWBY-volume-7-transcript-idea')
-    #return str(generate_random_page(category, subcategory)) timeout on link genreation
-    #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 
-##print(len(generate_random_page('anime', 'Inuyasha')))
-#print(get_story(generate_random_page('anime','Naruto')))
-
-#print(random_story_in_page('anime', 'Naruto'))
-    
     
 
 
-'''
+
 ########################below this line is old code, don't think we need for the project. 
 def retrieve_page_one(url):
     response = urllib.request.urlopen(url) ### can make search query to generate url properly. will make function later to get different URLS. 
@@ -114,10 +104,14 @@ def retrieve_page_one(url):
     #print(str(copylist[0]))
     return copylist
 
+def random_story_in_page(category:str, subcategory:str)-> str:
+    '''returns a random story from a page, given category and subcategory'''
+    return retrieve_page_one('https://www.fanfiction.net/anime/Naruto/')
+    #return str(generate_random_page(category, subcategory)) timeout on link genreation
+    #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 
 
-
-
+'''
 def retrieve_all_links(copylist):
     newurl = 'https://www.fanfiction.net/anime/Alice-19th/?&srt=1&r=103&p='#end portion should be universal for all categories. this should be updated.
     x = str(copylist[0][int(str(copylist[0]).index("&p")):])
