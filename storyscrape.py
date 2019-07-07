@@ -83,6 +83,7 @@ def generate_random_page(category: str,subcategory: str)-> list:
 
 ########################below this line is old code, don't think we need for the project. 
 def retrieve_page_one(url):
+    '''
     response = urllib.request.urlopen(url) ### can make search query to generate url properly. will make function later to get different URLS. 
     data = response.read()
     response.close()
@@ -103,6 +104,8 @@ def retrieve_page_one(url):
                 copylist.append(x[i])
     #print(str(copylist[0]))
     return copylist
+    '''
+    return ('why is this not working')
 
 def random_story_in_page(category:str, subcategory:str)-> str:
     '''returns a random story from a page, given category and subcategory'''
