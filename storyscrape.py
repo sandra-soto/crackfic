@@ -1,10 +1,13 @@
 import urllib.request
-from collections import defaultdict
+#from collections import defaultdict
 #from fanfiction import Scraper
 from bs4 import BeautifulSoup
 from random import randint
 import requests
 
+
+
+'''
 def get_soup(url):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -12,7 +15,7 @@ def get_soup(url):
 
 def pull_links(url, soup):
     #just part of the bigger function, nothing to see here. 
-    '''this code is to be used in a for loop to get the link for each story present on a page. '''
+    #this code is to be used in a for loop to get the link for each story present on a page. 
     sublinks = soup.find_all("a", class_ = 'stitle')
     newlinks = []
     for i in sublinks:
@@ -23,7 +26,7 @@ def pull_links(url, soup):
 def get_pages(url, soup):
     #works when given the subcategory, like https://www.fanfiction.net/Anime/Naruto/' needs subcategory = Naruto like in this example.
     #used in lower function, no need to worry about this. 
-    '''gives me the number of pages i need to go through to get stories ON A SPECIFIC PAGE. THE URL MUST HAVE THE NEW PAGE ADDED TO IT IF NECESSARY.'''
+    #gives me the number of pages i need to go through to get stories ON A SPECIFIC PAGE. THE URL MUST HAVE THE NEW PAGE ADDED TO IT IF NECESSARY.
     searchmax = soup.find_all('a')
     for i in searchmax:
         if str(i.text) == "Last":
@@ -39,7 +42,7 @@ def get_pages(url, soup):
 
 def get_story_data(storyurl: str)->list:
     #used to display where story is from and details regarding the story. 
-    '''gets author data of whomever wrote this particular story'''
+    #gets author data of whomever wrote this particular story
     page = requests.get(storyurl)
     soup = BeautifulSoup(page.content, 'html.parser')
     searchdata = soup.find_all('span', class_='xgray xcontrast_txt')
@@ -48,7 +51,7 @@ def get_story_data(storyurl: str)->list:
 
 def get_story(storyurl):
     #gets actual story text
-    '''takes the url of the story and gets the story written by whomever did so.'''
+    #takes the url of the story and gets the story written by whomever did so.
     storyurl = 'https://www.fanfiction.net/' + storyurl
     page = requests.get(storyurl)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -60,7 +63,7 @@ def get_story(storyurl):
 def generate_random_page(category: str,subcategory: str)-> list:
     #takes a random page from the subcategory and pulls a list of stories from that page. list length is 25
     #there is the case that the story does not have more less 1k words on the page... needs to be resolved. 
-    '''takes the main and sub category to generate a random page in which will return a list of stories for that page only.'''
+    #takes the main and sub category to generate a random page in which will return a list of stories for that page only.
     nsubcategory = subcategory.replace(' ', '-') #####done so it should work in generating the results.
     ncategory = category.lower() ####works right with url
     url = 'https://www.fanfiction.net/' + category + '/' + nsubcategory
@@ -83,7 +86,7 @@ def generate_random_page(category: str,subcategory: str)-> list:
 
 ########################below this line is old code, don't think we need for the project. 
 def retrieve_page_one(url):
-    '''
+    
     response = urllib.request.urlopen(url) ### can make search query to generate url properly. will make function later to get different URLS. 
     data = response.read()
     response.close()
@@ -104,12 +107,20 @@ def retrieve_page_one(url):
                 copylist.append(x[i])
     #print(str(copylist[0]))
     return copylist
-    '''
-    return ('why is this not working')
+    
+    #return ('why is this not working')
+'''
+
+def test_function(url):
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    response.close()
+    return str(data)
+
 
 def random_story_in_page(category:str, subcategory:str)-> str:
-    '''returns a random story from a page, given category and subcategory'''
-    return retrieve_page_one('https://www.fanfiction.net/anime/Naruto/')
+    #returns a random story from a page, given category and subcategory
+    return test_function('https://www.youtube.com/')
     #return str(generate_random_page(category, subcategory)) timeout on link genreation
     #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 

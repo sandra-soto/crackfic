@@ -2,7 +2,6 @@ import subcategory
 import storyscrape as sc
 import flask
 from flask import request, redirect, url_for, jsonify, render_template
-from waitress import serve
 app = flask.Flask(__name__)
 
 import subcateg_list
@@ -39,9 +38,5 @@ def madlib(fandom):
     return "Welcome  to the madlib page for " + fandom + '\n' + str(sc.random_story_in_page('anime', fandom))
 
 if __name__ == '__main__':
-##    app.debug=True # this will give us an error message when the app crashes
-##    app.run()
-    try:
-        serve(app)
-    except:
-        pass
+    app.debug=True # this will give us an error message when the app crashes
+    app.run()
