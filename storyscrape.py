@@ -117,10 +117,21 @@ def test_function(url):
     response.close()
     return str(data)
 
+def correct_subcategory_link(subcategory:str): #returns the correct link for subcategory minus japanese titles for some reason
+    sbc = subcategory[:-1]
+    sbc = sbc.replace(" ", "%20")
+    sbc = sbc.replace("|", "%7C")
+    sbc = sbc.replace("&", "*a*")
+    sbc = sbc.replace(".", "*d*")
+    sbc = "https://archiveofourown.org/tags/" + sbc + "/works"
+    #print(sbc)
+    return sbc
 
-def random_story_in_page(category:str, subcategory:str)-> str:
+def random_story_in_page(subcategory:str)-> str:
+    ranstory = correct_subcategory_link(subcategory)
+    return test_function(ranstory) #replaced the youtube thing with an archive link
     #returns a random story from a page, given category and subcategory
-    return test_function('https://www.youtube.com/')
+    #return test_function('https://www.youtube.com/')
     #return str(generate_random_page(category, subcategory)) timeout on link genreation
     #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 

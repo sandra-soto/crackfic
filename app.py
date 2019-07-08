@@ -1,5 +1,6 @@
 import storyscrape as sc
 import flask
+import random
 from flask import request, redirect, url_for, jsonify, render_template
 from waitress import serve
 app = flask.Flask(__name__)
@@ -31,9 +32,20 @@ def success(name):
         fandom_selection = fandom_selection.replace('/',' ')
         return redirect(url_for('madlib', fandom = fandom_selection))
 
-@app.route('/madlib/<fandom>')
+@app.route('/madlib/<fandom>', methods = ['GET','POST'])
 def madlib(fandom):
-    return "Welcome  to the madlib page for " + fandom + '\n' + str(sc.random_story_in_page('anime', fandom))
+    if request.method == 'GET':
+        randnum = random.randint(1,20)
+        return render_template('madlib.html',rand = randnum) #creates random number of input boxes from 1-20
+    if request.method == 'POST':
+        word_list = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
+        return redirect(url_for('testinputs', fandom=fandom,words=word_list))
+        #return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page(fandom) #sc.correct_subcategory_link(fandom)
+    
+@app.route('/why/<fandom>/<words>')
+def testinputs(fandom,words):
+    return words + sc.random_story_in_page(fandom) #prints out word_list and also fandom story page direct link
+
 
 if __name__ == '__main__':
 ##    app.debug=True # this will give us an error message when the app crashes

@@ -1,0 +1,38 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='alternate.css')}}" />
+  <style>
+  .center {
+    text-align: center;
+    padding: 70px 0;
+  }
+
+  </style> 
+</head>
+ <!-- connecting the main.css file to this file  in the head -->
+   <body>
+      <div class = "center">
+        <form action = "/madlib/<fandom>" method = "POST">
+           <span style="font-family:monospace"><h1>Enter your words!</h1></span>
+           
+             <center><table>
+              {% for x in range(rand) %}
+                <tr>
+                  <td>
+                    <div class = "textbox">
+                      <input type='text' class='input_text' name='input_text[]' id='input_text'>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+             </table></center>
+
+           <p><input type = "submit" value = "search" /></p>
+        </form>
+      </div>
+   </body>
+</html>
+
+<!--<input type="text" name="{{ x }}" value = "{{ x }}"> -->
