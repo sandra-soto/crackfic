@@ -85,6 +85,6 @@ bs = (pull_links(url, first))
 #              '/media/Celebrities%20*a*%20Real%20People/fandoms', '/media/Movies/fandoms', '/media/Music%20*a*%20Bands/fandoms',
 #              '/media/Other%20Media/fandoms', '/media/Theater/fandoms', '/media/TV%20Shows/fandoms',
 #              '/media/Video%20Games/fandoms', '/media/Uncategorized%20Fandoms/fandoms']
-print(list_categories(bs[0]))
+print(list_categories(bs[10]))
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^ example of code. the bs used in final print statement is basically the same as the genre_list provided. 
