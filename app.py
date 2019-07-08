@@ -2,10 +2,10 @@ import storyscrape as sc
 import flask
 import random
 from flask import request, redirect, url_for, jsonify, render_template
-from waitress import serve
 app = flask.Flask(__name__)
 
 import subcateg_list
+fndm = None
 
 @app.route('/') # this is the main page
 def main():
@@ -35,19 +35,21 @@ def success(name):
 @app.route('/madlib/<fandom>', methods = ['GET','POST'])
 def madlib(fandom):
     if request.method == 'GET':
+        global fndm
+        fndm = fandom
         randnum = random.randint(1,20)
         return render_template('madlib.html',rand = randnum) #creates random number of input boxes from 1-20
     if request.method == 'POST':
         word_list = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
-        return redirect(url_for('testinputs', fandom=fandom,words=word_list))
+        return redirect(url_for('testinputs', fandom=fndm, words=word_list))
         #return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page(fandom) #sc.correct_subcategory_link(fandom)
     
 @app.route('/why/<fandom>/<words>')
-def testinputs(fandom,words):
-    return words + sc.random_story_in_page(fandom) #prints out word_list and also fandom story page direct link
+def testinputs(fandom, words):
+    return "--->" + fandom + sc.random_story_in_page(fandom) #prints out word_list and also fandom story page direct link
 
 
 if __name__ == '__main__':
-##    app.debug=True # this will give us an error message when the app crashes
-    serve(app)
-##    app.run()
+    app.debug=True # this will give us an error message when the app crashes
+##    serve(app)
+    app.run()
