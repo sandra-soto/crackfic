@@ -40,7 +40,7 @@ def random_story_in_page(subcategory:str)-> str:
     print(subcat)
     story_ids = generate_url(retrieve_story(subcat), subcat)
     print(story_ids)
-    return get_story_text(story_ids[randint(0, len(story_ids))])
+    return get_story_text(story_ids[randint(0, len(story_ids) - 1)])
 ##    ranstory = correct_subcategory_link(subcategory)
 ##    return test_function(ranstory) #replaced the youtube thing with an archive link
     #returns a random story from a page, given category and subcategory
