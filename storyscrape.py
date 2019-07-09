@@ -41,6 +41,8 @@ def retrieve_story(url:str)-> str:
     return int(final.find_all("li")[-2].text)
 
 #print(retrieve_story('https://archiveofourown.org/tags/07-Ghost/works'))
+#https://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Bcrossover%5D=&work_search%5Bcomplete%5D=&work_search%5Bwords_from%5D=0&work_search%5Bwords_to%5D=1000&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bquery%5D=&work_search%5Blanguage_id%5D=1&commit=Sort+and+Filter&tag_id=
+####### ^^^^^^use this link to parse shit, add subcategory to end of this (make sure to urlify the subcategory in order for this to work#####
 
 def generate_url(num_pages: int, url_sub: str):
     '''takes a random page number and generates stories on that page. example of url_sub = https://archiveofourown.org/tags/07-Ghost/works'''
@@ -60,30 +62,31 @@ def generate_url(num_pages: int, url_sub: str):
             linklist.append(i.a.get("href"))
         except:
             continue
-    word_count = soup.find_all("dd", class_ = "words")
-    word_count_list = []
-    for i in word_count:
-        word_count_list.append(int(str(i.text).replace(",", '')))
+    ##### below code commented out because I didnt notice ao3 had filtering for language and wordcount. try now should be much faster #####
+    #word_count = soup.find_all("dd", class_ = "words")
+    #word_count_list = []
+    #for i in word_count:
+    #    word_count_list.append(int(str(i.text).replace(",", '')))
 
     #print(word_count_list)
 
-    languages = []
-    language = soup.find_all("dd", class_ = "language")
-    for i in language[:-1]:
-        languages.append(str(i.text))
+    #languages = []
+    #language = soup.find_all("dd", class_ = "language")
+    #for i in language[:-1]:
+    #    languages.append(str(i.text))
 
     #print(linklist)
     #print(languages)
     #print(word_count_list)
-    final_list = []
-    for i in range(len(linklist)):
-        if languages[i] == "English" and word_count_list[i] <= 1000:
-            #print('f')
-            final_list.append(linklist[i])
+    #final_list = []
+    #for i in range(len(linklist)):
+    #    if languages[i] == "English" and word_count_list[i] <= 1000:
+    #        #print('f')
+    #        final_list.append(linklist[i])
         
         
     #print(final_list)
-    return final_list
+    return linklist
     #print(final)
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^(notes for generate_url function)
 ####generate_url(11, 'https://archiveofourown.org/tags/07-Ghost/works')
