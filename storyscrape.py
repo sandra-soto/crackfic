@@ -24,8 +24,11 @@ def correct_subcategory_link(subcategory:str): #returns the correct link for sub
     return sbc
 
 def random_story_in_page(subcategory:str)-> str:
-    ranstory = correct_subcategory_link(subcategory)
-    return test_function(ranstory) #replaced the youtube thing with an archive link
+    url = correct_subcategory_link(subcategory)
+    story_ids = generate_url(retrieve_story(url), url)
+    return get_story_text(story_ids[randint(0, len(story_ids))])
+##    ranstory = correct_subcategory_link(subcategory)
+##    return test_function(ranstory) #replaced the youtube thing with an archive link
     #returns a random story from a page, given category and subcategory
     #return test_function('https://www.youtube.com/')
     #return str(generate_random_page(category, subcategory)) timeout on link genreation
@@ -89,7 +92,8 @@ def generate_url(num_pages: int, url_sub: str):
     return linklist
     #print(final)
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^(notes for generate_url function)
-####generate_url(11, 'https://archiveofourown.org/tags/07-Ghost/works')
+####a = generate_url(retrieve_story('https://archiveofourown.org/tags/07-Ghost/works'), 'https://archiveofourown.org/tags/07-Ghost/works')
+####print(a)
 #### returns ends of link: /works/429558
 #### needs to be used like: https://archiveofourown.org/works/490307 ### will get url from here. 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -97,6 +101,7 @@ def generate_url(num_pages: int, url_sub: str):
 
 def get_story_text(url: str) -> str:
     '''pulls text from given url. example of url = https://archiveofourown.org/works/490307'''
+    url = 'https://archiveofourown.org' + url
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     final = soup.find("div", class_ = "userstuff")
