@@ -3,4 +3,3 @@ gunicorn==19.9.0
 nltk==3.4.1
 beautifulsoup4==4.7.1
 requests==2.21.0
-Flask-Session==0.3.1
