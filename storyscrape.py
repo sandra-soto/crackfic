@@ -7,7 +7,19 @@ from random import randint
 import requests
 
 
-
+def get_story_text(url: str) -> str:
+    '''pulls text from given url. example of url = https://archiveofourown.org/works/490307'''
+    url = 'https://archiveofourown.org' + url
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    final = soup.find("div", class_ = "userstuff")
+    storytext = ""
+    for i in final:
+        try:
+            storytext += str(i.text) + "\n"
+        except:
+            continue
+    return storytext
 def test_function(url):
     response = urllib.request.urlopen(url)
     data = response.read()
@@ -25,7 +37,9 @@ def correct_subcategory_link(subcategory:str): #returns the correct link for sub
 
 def random_story_in_page(subcategory:str)-> str:
     subcat = correct_subcategory_link(subcategory)
+    print(subcat)
     story_ids = generate_url(retrieve_story(subcat), subcat)
+    print(story_ids)
     return get_story_text(story_ids[randint(0, len(story_ids))])
 ##    ranstory = correct_subcategory_link(subcategory)
 ##    return test_function(ranstory) #replaced the youtube thing with an archive link
@@ -35,11 +49,14 @@ def random_story_in_page(subcategory:str)-> str:
     #return get_story(generate_random_page(category, subcategory)[randint(0,24)])
 
 
-def retrieve_story(url:str)-> str:
+def retrieve_story(subcat:str)-> str:
     '''take url from subcategory then get max num of pages. example of url parameter = https://archiveofourown.org/tags/07-Ghost/works'''
+    url = 'https://archiveofourown.org/tags/' + subcat + '/works'
+    print(url)
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     final = soup.find("ol", class_ = 'pagination actions')
+    print(final)
     #print(final.find_all("li")[-2].text)
     return int(final.find_all("li")[-2].text)
 
@@ -102,7 +119,9 @@ def generate_url(num_pages: int, subcat: str):
     return linklist
     #print(final)
 
-#print(generate_url(6<---test, 'Boruto:%20Naruto%20Next%20Generations'))
+#x = (generate_url(6, 'Boruto:%20Naruto%20Next%20Generations'))
+#print(x)
+#print(random_story_in_page('Cardfight!! Vanguard'))
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^(notes for generate_url function)
 ####a = generate_url(retrieve_story('https://archiveofourown.org/tags/07-Ghost/works'), 'https://archiveofourown.org/tags/07-Ghost/works')
 ####print(a)
@@ -111,19 +130,7 @@ def generate_url(num_pages: int, subcat: str):
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-def get_story_text(url: str) -> str:
-    '''pulls text from given url. example of url = https://archiveofourown.org/works/490307'''
-    url = 'https://archiveofourown.org' + url
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    final = soup.find("div", class_ = "userstuff")
-    storytext = ""
-    for i in final:
-        try:
-            storytext += str(i.text) + "\n"
-        except:
-            continue
-    return storytext
+
 
 ####print(get_story_text('https://archiveofourown.org/works/490307'))
     
