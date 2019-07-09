@@ -44,18 +44,28 @@ def retrieve_story(url:str)-> str:
     return int(final.find_all("li")[-2].text)
 
 #print(retrieve_story('https://archiveofourown.org/tags/07-Ghost/works'))
-#https://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Bcrossover%5D=&work_search%5Bcomplete%5D=&work_search%5Bwords_from%5D=0&work_search%5Bwords_to%5D=1000&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bquery%5D=&work_search%5Blanguage_id%5D=1&commit=Sort+and+Filter&tag_id=
-####### ^^^^^^use this link to parse shit, add subcategory to end of this (make sure to urlify the subcategory in order for this to work#####
+#https://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Bcrossover%5D=&work_search%5Bcomplete%5D=&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bquery%5D=&work_search%5Blanguage_id%5D=1&commit=Sort+and+Filter&tag_id=
+####### ^^^^^^use this link to parse shit, add subcategory to end of this (make sure to urlify the subcategory in order for this to work) ####### 
+####### ^^^^^^link should be used for retrieve_story function to get max pages, but shouldnt be used when the random int generated for page is > 1. that uses another kind of url. ########
+####### if randint generates 1, then use this url template above ########
 
-def generate_url(num_pages: int, url_sub: str):
-    '''takes a random page number and generates stories on that page. example of url_sub = https://archiveofourown.org/tags/07-Ghost/works'''
+####### https://archiveofourown.org/tags/Boruto:%20Naruto%20Next%20Generations/works?commit=Sort+and+Filter&page=3&utf8=%E2%9C%93&work_search%5Bcomplete%5D=&work_search%5Bcrossover%5D=&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Blanguage_id%5D=1&work_search%5Bother_tag_names%5D=&work_search%5Bquery%5D=&work_search%5Bsort_column%5D=revised_at&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000 #######
+#######                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                              ^^^^^^
+####### pointed toward areas that needed to be changed for the url 
+
+
+
+def generate_url(num_pages: int, subcat: str):
+    '''takes max pages and subcategory (must be urlified) and  generates stories on that page. example of subcat = Boruto:%20Naruto%20Next%20Generations'''
 
     page_num = randint(1, num_pages)
-    #print(page_num)
-    if page_num > 1:
-        url_sub += "?page="
-        url_sub += str(page_num)
-    page = requests.get(url_sub)
+    print(page_num)
+    
+    url = "https://archiveofourown.org/tags/" + str(subcat) + "/works?commit=Sort+and+Filter&page=" + str(page_num) + "&utf8=%E2%9C%93&work_search%5Bcomplete%5D=&work_search%5Bcrossover%5D=&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Blanguage_id%5D=1&work_search%5Bother_tag_names%5D=&work_search%5Bquery%5D=&work_search%5Bsort_column%5D=revised_at&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000"
+    #url_sub += str(page_num)
+    print(url)
+    #url = "https://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Bcrossover%5D=&work_search%5Bcomplete%5D=&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bquery%5D=&work_search%5Blanguage_id%5D=1&commit=Sort+and+Filter&tag_id=" + str(subcat)
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     final = soup.find_all("h4", class_ = "heading")
     linklist = []
@@ -91,6 +101,8 @@ def generate_url(num_pages: int, url_sub: str):
     #print(final_list)
     return linklist
     #print(final)
+
+#print(generate_url(6<---test, 'Boruto:%20Naruto%20Next%20Generations'))
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^(notes for generate_url function)
 ####a = generate_url(retrieve_story('https://archiveofourown.org/tags/07-Ghost/works'), 'https://archiveofourown.org/tags/07-Ghost/works')
 ####print(a)
