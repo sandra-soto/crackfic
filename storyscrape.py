@@ -20,12 +20,12 @@ def correct_subcategory_link(subcategory:str): #returns the correct link for sub
 ##    sbc = sbc.replace("|", "%7C")
 ##    sbc = sbc.replace("&", "*a*")
 ##    sbc = sbc.replace(".", "*d*")
-    sbc = "https://archiveofourown.org/tags/" + urllib.parse.quote(subcategory) + "/works"
+    sbc = urllib.parse.quote(subcategory)
     return sbc
 
 def random_story_in_page(subcategory:str)-> str:
-    url = correct_subcategory_link(subcategory)
-    story_ids = generate_url(retrieve_story(url), url)
+    subcat = correct_subcategory_link(subcategory)
+    story_ids = generate_url(retrieve_story(url), subcat)
     return get_story_text(story_ids[randint(0, len(story_ids))])
 ##    ranstory = correct_subcategory_link(subcategory)
 ##    return test_function(ranstory) #replaced the youtube thing with an archive link
