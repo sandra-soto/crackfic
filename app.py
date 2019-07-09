@@ -2,18 +2,10 @@ import storyscrape as sc
 import flask
 import random
 from flask import request, redirect, url_for, jsonify, render_template, session
-from flask.ext.session import Session #TEST SHIT pip install Flask-Session
-
-app = Flask(__name__)
-
-#TEST SHIT
-app.config['SESSION_TYPE'] = 'memcached'
-app.config['SECRET_KEY'] = 'super secret key'
-sess = Session()
-#TEST SHIT
+app = flask.Flask(__name__)
+app.secret_key = 'huh'
 
 import subcateg_list
-fndm = None
 
 @app.route('/') # this is the main page
 def main():
@@ -40,21 +32,21 @@ def success(name):
         fandom_selection = fandom_selection.replace('/',' ')
         return redirect(url_for('madlib', fandom = fandom_selection))
 
-@app.route('/madlib/<fandom>', methods = ['GET','POST'])
-def madlib(fandom):
+@app.route('/madlib/<fandom>', methods = ['GET', 'POST'])
+def madlib(fandom=None):
     if request.method == 'GET':
-        session['fndm'] = fandom #TEST SESSION
+        session['fandom'] = fandom
         randnum = random.randint(1,20)
         return render_template('madlib.html',rand = randnum) #creates random number of input boxes from 1-20
     if request.method == 'POST':
+        fandom = session['fandom']
         word_list = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
-        return redirect(url_for('testinputs', words=word_list))
+        return redirect(url_for('testinputs', fandom=fandom, words=word_list))
         #return "Welcome  to the madlib page for " + fandom + '\n' + sc.random_story_in_page(fandom) #sc.correct_subcategory_link(fandom)
     
-@app.route('/why/cry/<words>')
-def testinputs(words):
-    fndm = session.get('fndm',None) #SESSION GET
-    return "--->" + fndm + sc.random_story_in_page(fndm) #prints out word_list and also fandom story page direct link
+@app.route('/why/<fandom>/<words>')
+def testinputs(fandom, words):
+    return "--->" + fandom + sc.random_story_in_page(fandom) #prints out word_list and also fandom story page direct link
 
 
 if __name__ == '__main__':
