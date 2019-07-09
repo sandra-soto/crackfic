@@ -37,7 +37,6 @@ def correct_subcategory_link(subcategory:str): #returns the correct link for sub
 
 def random_story_in_page(subcategory:str)-> str:
     subcat = correct_subcategory_link(subcategory)
-    print(subcat)
     story_ids = generate_url(retrieve_story(subcat), subcat)
     print(story_ids)
     return get_story_text(story_ids[randint(0, len(story_ids)-1)])
@@ -51,12 +50,10 @@ def random_story_in_page(subcategory:str)-> str:
 
 def retrieve_story(subcat:str)-> str:
     '''take url from subcategory then get max num of pages. example of url parameter = https://archiveofourown.org/tags/07-Ghost/works'''
-    url = 'https://archiveofourown.org/tags/' + subcat + '/works'
-    print(url)
+    url = "https://archiveofourown.org/tags/" + str(subcat) + "/works?commit=Sort+and+Filter&page=1&utf8=%E2%9C%93&work_search%5Bcomplete%5D=&work_search%5Bcrossover%5D=&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Blanguage_id%5D=1&work_search%5Bother_tag_names%5D=&work_search%5Bquery%5D=&work_search%5Bsort_column%5D=revised_at&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     final = soup.find("ol", class_ = 'pagination actions')
-    print(final)
     #print(final.find_all("li")[-2].text)
     return int(final.find_all("li")[-2].text)
 
@@ -76,11 +73,8 @@ def generate_url(num_pages: int, subcat: str):
     '''takes max pages and subcategory (must be urlified) and  generates stories on that page. example of subcat = Boruto:%20Naruto%20Next%20Generations'''
 
     page_num = randint(1, num_pages)
-    print(page_num)
-    
     url = "https://archiveofourown.org/tags/" + str(subcat) + "/works?commit=Sort+and+Filter&page=" + str(page_num) + "&utf8=%E2%9C%93&work_search%5Bcomplete%5D=&work_search%5Bcrossover%5D=&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Blanguage_id%5D=1&work_search%5Bother_tag_names%5D=&work_search%5Bquery%5D=&work_search%5Bsort_column%5D=revised_at&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000"
     #url_sub += str(page_num)
-    print(url)
     #url = "https://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bexcluded_tag_names%5D=&work_search%5Bcrossover%5D=&work_search%5Bcomplete%5D=&work_search%5Bwords_from%5D=100&work_search%5Bwords_to%5D=1000&work_search%5Bdate_from%5D=&work_search%5Bdate_to%5D=&work_search%5Bquery%5D=&work_search%5Blanguage_id%5D=1&commit=Sort+and+Filter&tag_id=" + str(subcat)
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
