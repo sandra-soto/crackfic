@@ -25,7 +25,7 @@ def correct_subcategory_link(subcategory:str): #returns the correct link for sub
 
 def random_story_in_page(subcategory:str)-> str:
     subcat = correct_subcategory_link(subcategory)
-    story_ids = generate_url(retrieve_story(url), subcat)
+    story_ids = generate_url(retrieve_story(subcat), subcat)
     return get_story_text(story_ids[randint(0, len(story_ids))])
 ##    ranstory = correct_subcategory_link(subcategory)
 ##    return test_function(ranstory) #replaced the youtube thing with an archive link
