@@ -1,4 +1,5 @@
 import urllib.request
+import urllib
 #from collections import defaultdict
 #from fanfiction import Scraper
 from bs4 import BeautifulSoup
@@ -118,13 +119,12 @@ def test_function(url):
     return str(data)
 
 def correct_subcategory_link(subcategory:str): #returns the correct link for subcategory minus japanese titles for some reason
-    sbc = subcategory[:-1]
-    sbc = sbc.replace(" ", "%20")
-    sbc = sbc.replace("|", "%7C")
-    sbc = sbc.replace("&", "*a*")
-    sbc = sbc.replace(".", "*d*")
-    sbc = "https://archiveofourown.org/tags/" + sbc + "/works"
-    #print(sbc)
+##    sbc = subcategory[:-1]
+##    sbc = sbc.replace(" ", "%20")
+##    sbc = sbc.replace("|", "%7C")
+##    sbc = sbc.replace("&", "*a*")
+##    sbc = sbc.replace(".", "*d*")
+    sbc = "https://archiveofourown.org/tags/" + urllib.parse.quote(subcategory) + "/works"
     return sbc
 
 def random_story_in_page(subcategory:str)-> str:
