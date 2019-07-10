@@ -30,7 +30,7 @@ eyeballs, birds)""", "RB": "adverb (ex: stealthily, slowly, quickly)", "RBR": "c
  shouts, throws)"}
 
 # part-of-speech tags to be excluded
-excluded_pos = ['.','.' ',', 'TO', 'IN', 'CC', 'DT', 'EX', 'LS', 'MD', 'PRP', 'PRP$', 'RP', 'WDT', 'WP', 'WP$', 'WRB', 'NNP', 'NNPS']
+excluded_pos = [':', '.','.' ',', 'TO', 'IN', 'CC', 'DT', 'EX', 'LS', 'MD', 'PRP', 'PRP$', 'RP', 'WDT', 'WP', 'WP$', 'WRB', 'NNP', 'NNPS']
 
 # describes how many words will be changed for a given text length
 num_of_changes = {100:6, 200: 7, 300: 9, 400: 11, 500: 13, 600: 14, 700: 16, 800: 18, 900:19, 1000:20}
@@ -61,19 +61,54 @@ def process(text)-> '{(part_of_speech, word):[indices of occurences]}, [tokens_l
   tokens = nltk.tokenize.casual_tokenize(text)
   return nltk_pos_tag(tokens), tokens
 
-def cut_pos(pos_dict) -> "[((part_of_speech, word), [occurences])]":
+def cut_pos(pos_dict, text_len:int) -> "[((part_of_speech, word), [occurences])], int":
   #important!, must be run -- not a utility function
   """removes unnecessary keys from pos_dict and returns only the most frequent tokens in a list data structure"""
+  num_changes = num_of_repls(200) # hardcoded story length, should be changed later
   for i in set(pos_dict.keys()):
     if (i[0] in excluded_pos or i[1] in unwanted_tokens) == True:
       del pos_dict[(i)]
-  return sorted(pos_dict.items(), key=lambda x:len(x[1]), reverse = True)[:num_of_repls(200)]
+  return sorted(pos_dict.items(), key=lambda x:len(x[1]), reverse = True)[:num_changes], num_changes
 
 def repl_all(occ_list, tokens, new_word)-> None:
   # utility function for repl_tokens() below
   """replaces all occurences of a word in the tokens list"""
   for occurence in occ_list:
     tokens[occurence] = new_word
+    
+def repl_tokens(pos_list, tokens) -> str:
+  #important!, must be run -- not a utility function
+  """prompts the user to replace words and returns the new text"""
+  for (pos, word), occ_list in pos_list:
+    new_word = input(f"gimme a {pos} - a {POS[pos]} -> ")
+    repl_all(occ_list, tokens, new_word)
+  return tokens
+
+
+def madlib_out(text:str):
+    pos_dict,tokens = process(text)
+    pos_list, num_changes = cut_pos(pos_dict, 200)
+    message = []
+    for (pos, word), occ_list in pos_list:
+        message.append(f"Enter a {POS[pos]}")
+    return message, num_changes, pos_list, tokens
+
+def madlib_done(new_list, num_changes, pos_list, tokens):
+    for i in range(0, num_changes):
+        (pos, word), occ_list = pos_list[i]
+        new_word = new_list[i]
+        repl_all(occ_list, tokens, new_word)
+    return " ".join(tokens)
+
+
+if __name__ == '__main__':
+  pos_dict,tokens = process(example_psg)
+  pos_list, num_changes = cut_pos(pos_dict, 200)
+##  tokens = repl_tokens(pos_list, tokens)
+  print(" ".join(tokens))
+
+'''
+for local madlibs
 
 def repl_tokens(pos_list, tokens) -> str:
   #important!, must be run -- not a utility function
@@ -82,9 +117,4 @@ def repl_tokens(pos_list, tokens) -> str:
     new_word = input(f"gimme a {pos} - a {POS[pos]} -> ")
     repl_all(occ_list, tokens, new_word)
   return " ".join(tokens)
-
-if __name__ == '__main__':
-  pos_dict,tokens = process(example_psg)
-  pos_list = cut_pos(pos_dict)
-  print(repl_tokens(pos_list, tokens))
-
+'''
