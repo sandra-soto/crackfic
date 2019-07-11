@@ -1,3 +1,7 @@
+.swag{
+	display:flex;
+}
+
 input[type=text] {
     font-size: 20px;
     background: #fff;
@@ -10,12 +14,27 @@ input[type=text] {
     margin: auto;
     margin-left: auto;
     margin-right: auto;
+    flex-grow:1;
 }
 input[type=text]:focus {
   background-color: lightblue;
 }
 
-input[type="submit"] {
+.yeet button {
+    font-size: 20px;
+    padding: 10px 8px;
+    font-family: sans-serif;
+    border: none;
+    border-bottom: none;
+    background-color: #FFFFFF;
+    color: #3399ff;
+}
+
+.yeet button:hover {
+	color: #ff3333;
+}
+
+.final input[type="submit"] {
     width: 200px;
     height: 50px;
     font-size: 24px;
@@ -26,6 +45,6 @@ input[type="submit"] {
 }
 
 /* Colors when cursor goes over to signify what it's on */
-input[type="submit"]:hover { 
+.final input[type="submit"]:hover { 
   background-color: #add8e6;
 }

@@ -13,6 +13,13 @@
 </head>
  <!-- connecting the main.css file to this file  in the head -->
    <body>
+      <script>
+      function myFunction() {
+        document.getElementById("demo").innerHTML = "fuck u";
+
+      }
+
+      </script>
       <div class = "center">
         <form action = "/madlib/<fandom>" method = "POST">
            <span style="font-family:sans-serif"><h1>Enter your words!</h1></span>
@@ -22,16 +29,24 @@
                 <tr>
                   <td>
                     <div class = "textbox">
-                      <p>{{tense[x]}}</p>
-                      <p>{{examples[tense[x]]}}
-                      <input type='text' class='input_text' name='input_text[]' id='input_text' placeholder={{tense[x]}}>
+                      <p>{{examples[tense[x]]}}</p>  
+
+                      <div class = "swag">
+                        <input type='text' class='input_text' name='input_text[]' id='input_text' placeholder="{{tense[x]}}">
+                        <div class = "yeet">
+                          <button width="100%" type = "button" onclick="myFunction()">?</button>  
+
+                          <p id="demo" ></p>
+                        </div>
+                      </div>
                     </div>
                   </td>
                 </tr>
               {% endfor %}
              </table></center>
-
-           <p><input type = "submit" value = "search" /></p>
+           <div class = "final">
+             <p><input type = "submit" name = "butt" value = "search" /></p>
+           </div>
         </form>
       </div>
    </body>

@@ -90,8 +90,11 @@ def madlib(fandom):
                                tense = session['msg'], examples = ml.pos_ex) #creates random number of input boxes from 1-20
     if request.method == 'POST':
         fandom = session['fandom']
-        session["word_list"] = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
-        return redirect(url_for('testinputs', fandom=fandom, words=session["word_list"]))
+        if request.form["butt"] == "search":
+            session["word_list"] = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
+            return redirect(url_for('testinputs', fandom=fandom, words=session["word_list"]))
+        else:
+            pass
             
 @app.route('/why/<fandom>/<words>')
 def testinputs(fandom, words):
