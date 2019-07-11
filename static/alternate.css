@@ -22,6 +22,7 @@ input[type="submit"] {
     font-family: sans-serif;
     border: none;
     border-radius: 10px;
+    background-color: #f0f0f0;
 }
 
 /* Colors when cursor goes over to signify what it's on */
