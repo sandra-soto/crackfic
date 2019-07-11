@@ -2,6 +2,7 @@ import nltk
 from random import randint
 from collections import defaultdict
 from math import floor
+## needs nltk.download("punkt") and nltk.download("averaged_perceptron_tagger")
 
 
 #to see documentation of part-of-speech tags, run commented code below
@@ -9,25 +10,22 @@ from math import floor
 ##nltk.help.upenn_tagset('RB') #RB is a pos tag
 ## alternatively, visit https://pythonprogramming.net/natural-language-toolkit-nltk-part-speech-tagging/
 
-example_psg = """Keith opened his eyes slowly, blinking a couple times as he tried to adjust to the bright light above his head. He wasn’t fully awake until he heard a groan a few feet away.
-Keith pushed himself up from the ground, shaking his head a couple times for good measure and looked around.
-The other paladins, and Allura and Coran, were sprawled out across the ground around him.
-Lance had landed on top of Hunk, his head half resting on the other boy’s shoulder. Pidge had fallen onto her side, and she almost looked like she was just sleeping.
-Coran and Allura had fallen next to each other, and one of Coran’s hands was in Allura’s hair. Shiro had his head resting on Allura’s leg.
-Keith had to stare out over the group for a solid 10 seconds just wondering if this was real life. Unfortunately, it was.
-He sighed and staggered to his feet. After all, this wasn’t the weirdest thing that ever happened to him.
-He walked over to Lance and Hunk first, lightly tapping Hunk’s cheek. “Hunk? Can you please get up?”
-Hunk wrinkled his nose and snored louder in response. Keith rolled his eyes and focused on waking Lance."""
 
 
-# names and descriptions of part-of-speech tags used
-POS = {"CD": "cardinal digit (ex: three, 33)", "JJ": "adjective (ex: big, tall)", "JJR": "comparative adjective (ex: bigger, smaller, taller)",
-"JJS": "superlative adjective (ex: greatest, reddest, dumbest)", "NN": "noun (ex: desk, nose, dirt)", "NNS": """plural noun (ex: bottles, \
-eyeballs, birds)""", "RB": "adverb (ex: stealthily, slowly, quickly)", "RBR": "comparative adverb (ex: harder, better, faster, stronger)",
-"RBS": "superlative adverb (ex: quickest, fastest, best)", "VB": "verb, base form (ex: take, sing, scream)", "VBD": "verb, past tense\
-(ex: poured, killed, broke)", "VBG": "verb, gerund/present participle (ex: sinning, chanting, racing)", "VBN": "verb, past participle\
-(ex: broken, taken, spoken)", "VBP": "verb, singular present tense (ex: take, burn)", "VBZ": "verb, 3rd person sing. present (ex: takes\
- shouts, throws)"}
+# part-of-speech tags used and their names in plain english
+POS = {'CD': 'cardinal digit ', 'JJ': 'adjective ', 'JJR': 'comparative adjective ', 'JJS': 'superlative adjective ',
+       'NN': 'noun ', 'NNS': 'plural noun ', 'RB': 'adverb ', 'RBR': 'comparative adverb ', 'RBS': 'superlative adverb ',
+       'VB': 'verb, base form ', 'VBD': 'verb, past tense','VBG': 'verb, gerund/present participle ',
+       'VBN': 'verb, past participle', 'VBP': 'verb, singular present tense ', 'VBZ': 'verb, 3rd person sing. present '}
+
+# part-of-speech tags wiht examples
+pos_ex = {'cardinal digit ': '(ex: three, 33)', 'adjective ': '(ex: big, tall)', 'comparative adjective ': '(ex: bigger, smaller, taller)',
+ 'superlative adjective ': '(ex: greatest, reddest, dumbest)', 'noun ': '(ex: desk, nose, dirt)',
+ 'plural noun ': '(ex: bottles, eyeballs, birds)', 'adverb ': '(ex: stealthily, slowly, quickly)',
+ 'comparative adverb ': '(ex: harder, better, faster, stronger)', 'superlative adverb ': '(ex: quickest, fastest, best)',
+ 'verb, base form ': '(ex: take, sing, scream)', 'verb, past tense': '(ex: poured, killed, broke)',
+ 'verb, gerund/present participle ': '(ex: sinning, chanting, racing)', 'verb, past participle': '(ex: broken, taken, spoken)',
+ 'verb, singular present tense ': '(ex: take, burn)', 'verb, 3rd person sing. present ': '(ex: takes shouts, throws)'}
 
 # part-of-speech tags to be excluded
 excluded_pos = [':', '.','.' ',', 'TO', 'IN', 'CC', 'DT', 'EX', 'LS', 'MD', 'PRP', 'PRP$', 'RP', 'WDT', 'WP', 'WP$', 'WRB', 'NNP', 'NNPS']
@@ -90,7 +88,7 @@ def madlib_out(text:str):
     pos_list, num_changes = cut_pos(pos_dict, 200)
     message = []
     for (pos, word), occ_list in pos_list:
-        message.append(f"[pos]")
+        message.append(f"POS[pos]")
     return message, num_changes, pos_list, tokens
 
 def madlib_done(new_list, num_changes, pos_list, tokens):
@@ -100,12 +98,12 @@ def madlib_done(new_list, num_changes, pos_list, tokens):
         repl_all(occ_list, tokens, new_word)
     return " ".join(tokens)
 
-
-if __name__ == '__main__':
-  pos_dict,tokens = process(example_psg)
-  pos_list, num_changes = cut_pos(pos_dict, 200)
-##  tokens = repl_tokens(pos_list, tokens)
-  print(" ".join(tokens))
+##
+##if __name__ == '__main__':
+##  pos_dict,tokens = process(example_psg)
+##  pos_list, num_changes = cut_pos(pos_dict, 200)
+####  tokens = repl_tokens(pos_list, tokens)
+##  print(" ".join(tokens))
 
 '''
 for local madlibs
