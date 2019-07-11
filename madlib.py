@@ -88,7 +88,7 @@ def madlib_out(text:str):
     pos_list, num_changes = cut_pos(pos_dict, 200)
     message = []
     for (pos, word), occ_list in pos_list:
-        message.append(f"POS[pos]")
+        message.append(f"{POS[pos]}")
     return message, num_changes, pos_list, tokens
 
 def madlib_done(new_list, num_changes, pos_list, tokens):
