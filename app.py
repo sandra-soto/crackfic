@@ -84,8 +84,8 @@ def success(name):
 def madlib(fandom):
     if request.method == 'GET':
         session['fandom'] = fandom
-        session['story'] = sc.random_story_in_page(fandom)
-        session['msg'], session['num_changes'], session['pos_list'], session['tokens'] = ml.madlib_out(session['story'])
+        scraped_story = sc.random_story_in_page(fandom)
+        session['msg'], session['num_changes'], session['pos_list'], session['tokens'] = ml.madlib_out(scraped_story)
         return render_template('madlib.html',rand = session['num_changes'], tense = session['msg']) #creates random number of input boxes from 1-20
     if request.method == 'POST':
         fandom = session['fandom']
