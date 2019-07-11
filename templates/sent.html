@@ -1,0 +1,43 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='main.css')}}" /> 
+    <style>
+   	.center {
+   		text-align: center;
+   		padding: 70px 0;
+   	}
+   	.titles {
+   		font-family: sans-serif;
+   	}
+    .homeb input[type="submit"]{
+      font-family: sans-serif;
+      border:1px solid #d8d8d8;
+      padding: 10px; 
+      font-weight:bold; 
+      text-align: center; 
+      color: #000000; 
+    }
+    .homeb input[type="submit"]:hover{
+        cursor: pointer;
+        border:1px solid #c1c1c1; 
+        background-color: #b5b5b5;
+    }
+   </style>
+</head>
+  <body>
+      <div class="center">
+        <div class = "titles">
+          <h1>Your message has been sent!</h1>
+          <h3>We will get back to you as soon as possible.</h3>
+        </div>
+        <!-- All buttons on front page to redirect -->
+        <div class = "homeb">
+          <form action = "/sent" method = "POST">
+             <p><input type = "submit" value = "Return to Home" /></p>
+          </form>
+        </div>
+      </div>
+  </body>
+</html>
