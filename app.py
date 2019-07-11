@@ -86,7 +86,8 @@ def madlib(fandom):
         session['fandom'] = fandom
         scraped_story = sc.random_story_in_page(fandom)
         session['msg'], session['num_changes'], session['pos_list'], session['tokens'] = ml.madlib_out(scraped_story)
-        return render_template('madlib.html',rand = session['num_changes'], tense = session['msg']) #creates random number of input boxes from 1-20
+        return render_template('madlib.html',rand = session['num_changes'],
+                               tense = session['msg'], examples = ml.pos_ex) #creates random number of input boxes from 1-20
     if request.method == 'POST':
         fandom = session['fandom']
         session["word_list"] = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
