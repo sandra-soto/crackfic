@@ -101,7 +101,7 @@ def testinputs(fandom, words):
     madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
     session.clear()
     return render_template("story.html",madlib = [madlib], bolder=words)
-##
+###
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes
