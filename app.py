@@ -4,14 +4,13 @@ import random
 from flask import request, redirect, url_for, jsonify, render_template, session, flash
 from forms import ContactForm
 from flask_mail import Message, Mail
-import secrets
 
 
 import madlib as ml
 
 mail = Mail()
 app = flask.Flask(__name__)
-app.secret_key = secrets.token_hex(16)
+app.secret_key = 'why'
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
