@@ -13,7 +13,6 @@
 </head>
  <!-- connecting the main.css file to this file  in the head -->
    <body>
-    <p id="demo"></p>
       <div class = "center">
         <form action = "/madlib/<fandom>" method = "POST">
            <span style="font-family:sans-serif"><h1>Enter your words!</h1></span>
@@ -23,7 +22,7 @@
                 <tr>
                   <td>
                     <div class = "textbox">
-                      <p>{{examples[tense[x]]}}</p>  
+                      <p id="demo"></p> 
 
                       <div class = "swag">
                         <input type='text' class='input_text' name='input_text[]' id='input_text' placeholder="{{tense[x]}}">
