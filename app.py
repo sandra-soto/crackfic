@@ -100,7 +100,7 @@ def madlib(fandom):
 def testinputs(fandom, words):
     madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
     session.clear()
-    return madlib
+    return render_template("story.html",madlib = madlib)
 
 
 if __name__ == '__main__':

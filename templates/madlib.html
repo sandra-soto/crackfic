@@ -13,13 +13,7 @@
 </head>
  <!-- connecting the main.css file to this file  in the head -->
    <body>
-      <script>
-      function myFunction() {
-        document.getElementById("demo").innerHTML = "fuck u";
-
-      }
-
-      </script>
+    <p id="demo"></p>
       <div class = "center">
         <form action = "/madlib/<fandom>" method = "POST">
            <span style="font-family:sans-serif"><h1>Enter your words!</h1></span>
@@ -34,9 +28,16 @@
                       <div class = "swag">
                         <input type='text' class='input_text' name='input_text[]' id='input_text' placeholder="{{tense[x]}}">
                         <div class = "yeet">
-                          <button width="100%" type = "button" onclick="myFunction()">?</button>  
+                          <button id = {{x}} width="100%" type = "button" onmouseover="myFunction(this)">?</button>  
+                          <script>
+                            function myFunction(elem) {
+                              var i = elem.id
+                              var parsed = JSON.parse('{{examples|tojson}}')
+                              var tensee = JSON.parse('{{tense|tojson}}')
+                              document.getElementById("demo").innerHTML = parsed[tensee[i]];
+                            }
 
-                          <p id="demo" ></p>
+                          </script>
                         </div>
                       </div>
                     </div>
