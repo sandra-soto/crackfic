@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<link type="text/css" rel="stylesheet"
@@ -18,18 +19,17 @@
   <body>
       <div class="center">
         <div class = "story">
-          <!--<p>{{madlib}}</p>-->
           <p id="vow_p"></p>
           <script>
             var vow = JSON.parse('{{madlib|tojson}}');
-            var wordsToBold= JSON.parse('{{bolder|tojson}}');
+            var wordsToBold= {{bolder|tojson|safe}};
             console.log('check y: '+ JSON.stringify(wordsToBold));
 
-            //function makeBold(input, wordsToBold) {
-            //    return input.replace(new RegExp('(\\b)(' + Array.prototype.join.call(wordsToBold,'|') + ')(\\b)','ig'), '$1<b>$2</b>$3');
-            //}
+            function makeBold(input, wordsToBold) {
+                return input.replace(new RegExp('(\\b)(' + Array.prototype.join.call(wordsToBold,'|') + ')(\\b)','ig'), '$1<b>$2</b>$3');
+            }
 
-            document.getElementById("vow_p").innerHTML = vow;//makeBold(vow[0], wordsToBold);
+            document.getElementById("vow_p").innerHTML = makeBold(vow[0], wordsToBold);
           </script>
         </div>
       </div>

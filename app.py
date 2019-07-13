@@ -92,13 +92,14 @@ def madlib(fandom):
         fandom = session['fandom']
         if request.form["butt"] == "search":
             session["word_list"] = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
-            return redirect(url_for('testinputs', fandom=fandom, words=session["word_list"]))
+            return redirect(url_for('testinputs'))
         else:
             pass
             
-@app.route('/why/<fandom>/<words>')
-def testinputs(fandom, words):
+@app.route('/output')
+def testinputs():
     madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
+    words = session["word_list"]
     session.clear()
     return render_template("story.html",madlib = [madlib], bolder=words)
 
