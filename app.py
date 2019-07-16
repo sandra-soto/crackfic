@@ -1,10 +1,26 @@
 import storyscrape as sc
 import flask
 import random
-from flask import request, redirect, url_for, jsonify, render_template, session
+from flask import request, redirect, url_for, jsonify, render_template, session, flash
+from forms import ContactForm
+from flask_mail import Message, Mail
+
+
 import madlib as ml
+
+mail = Mail()
 app = flask.Flask(__name__)
-app.secret_key = 'huh'
+app.secret_key = 'why'
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = 'smthmoreclever@gmail.com'
+app.config["MAIL_PASSWORD"] = 'covenanT710!'
+ 
+mail.init_app(app)
+
+#print(flask.__version__)
 
 import subcateg_list
 
@@ -17,10 +33,40 @@ def main():
 @app.route('/search',methods = ['GET','POST']) # this is an "html form"
 def search():
     if request.method == 'POST':
-        search_category = request.form['searcher']
-        return redirect(url_for('success', name = search_category.replace(" ", "").lower()))
+        if request.form['searcher'] == "CONTACT":
+            return redirect(url_for('contact'))
+        elif request.form['searcher'] == "FAQ":
+            pass
+        else:
+            search_category = request.form['searcher']
+            return redirect(url_for('success', name = search_category.replace(" ", "").lower()))
     elif request.method == 'GET':
         return render_template('main.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+  form = ContactForm()
+  if request.method == 'POST':
+    if form.validate() == False:
+      return render_template('contact.html', form=form)
+    else:
+      msg = Message("Crackfic: " + form.subject.data, sender='smthmoreclever@gmail.com', recipients=['smthmoreclever@gmail.com'])
+      msg.body = """
+      From: %s <%s>
+      %s
+      """ % (form.name.data, form.email.data, form.message.data)
+      mail.send(msg)
+      return redirect(url_for("sent"))
+ 
+  elif request.method == 'GET':
+    return render_template('contact.html', form=form)
+
+@app.route('/sent',methods=['GET','POST'])
+def sent():
+    if request.method == 'GET':
+        return render_template('sent.html')
+    else:
+        return redirect(url_for("main"))
 
 @app.route('/<name>', methods = ['GET','POST']) # this will redirect us to a successful search
 def success(name):
@@ -38,19 +84,24 @@ def success(name):
 def madlib(fandom):
     if request.method == 'GET':
         session['fandom'] = fandom
-        session['story'] = sc.random_story_in_page(fandom)
-        session['msg'], session['num_changes'], session['pos_list'], session['tokens'] = ml.madlib_out(session['story'])
-        return render_template('madlib.html',rand = session['num_changes']) #creates random number of input boxes from 1-20
+        scraped_story = sc.random_story_in_page(fandom)
+        session['msg'], session['num_changes'], session['pos_list'], session['tokens'] = ml.madlib_out(scraped_story)
+        return render_template('madlib.html',rand = session['num_changes'],
+                               tense = session['msg'], examples = ml.pos_ex) #creates random number of input boxes from 1-20
     if request.method == 'POST':
         fandom = session['fandom']
-        session["word_list"] = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
-        return redirect(url_for('testinputs', fandom=fandom, words=session["word_list"]))
+        if request.form["butt"] == "search":
+            session["word_list"] = request.form.getlist('input_text[]') #lowkey dont know if this works but lmao
+            return redirect(url_for('testinputs'))
+        else:
+            pass
             
-@app.route('/why/<fandom>/<words>')
-def testinputs(fandom, words):
+@app.route('/output')
+def testinputs():
     madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
+    words = session["word_list"]
     session.clear()
-    return madlib
+    return render_template("story.html",madlib = [madlib], bolder=words)
 
 
 if __name__ == '__main__':

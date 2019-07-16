@@ -17,10 +17,10 @@
       background: #fff;
       line-height: 1;
       border: 1px solid #ccc;
-      padding: 10px 8px 10px 14px;
+      padding: 10px 8px 5px 14px;
       border-radius: 6px;
       width: 100%;
-      font-family: monospace;
+      font-family: sans-serif;
       position: relative;
     }
     .dropdown option:hover{
@@ -28,6 +28,7 @@
     }
 
    </style>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 </head>
     <body>
       <div class="center">
@@ -42,8 +43,17 @@
                 </select>
               </div>
             </div>
-          <p><input type = "submit" value = "Madlibify" /></p>
+          <div class = "fandom_buttons">
+            <p><input type = "submit" value = "Madlibify" onclick="$('#loading').show();"/></p>
+          </div>
         </form>
+
+        <div id="loading" style="display:none;">
+          <div style="width:100%; height:100%; background-color: white; top:0; left:0; position:fixed;">
+            <div style="z-index: 10000"> <img src="static/loadinggif.gif" alt=""/> </div>
+          </div>
+        </div>
+
       </div>
     </body>
 </html>

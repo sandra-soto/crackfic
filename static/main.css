@@ -1,17 +1,120 @@
 /* feel free to change any of this garbage, just here for example */
 
 /* Designs button layout */
-input[type="submit"] {
+.fandom_buttons input[type="submit"] {
     width: 550px;
     height: 50px;
     font-size: 24px;
-    font-family: monospace;
+    font-family: sans-serif;
     border: none;
     border-radius: 10px;
+    background-color: #f0f0f0;
 }
 
 /* Colors when cursor goes over to signify what it's on */
-input[type="submit"]:hover { 
+.fandom_buttons input[type="submit"]:hover { 
   background-color: #add8e6;
 }
 
+.other_page input[type="submit"] {
+  border: none;
+  border-bottom: none;
+  background-color: #FFFFFF;
+  color: #3399ff;
+  font-size: 20px;
+  font-family: sans-serif;
+  display:inline-block;
+  width: 300px;
+  height:auto;
+}
+
+.other_page input[type="submit"]:hover{
+  color: #ff3333;
+}
+
+
+
+/* Contact form */
+form label {
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: sans-serif;
+  display: block;
+  padding: 10px 0;
+}
+ 
+form input#name,
+form input#email,
+form input#subject {
+  width: 400px;
+  font-family: sans-serif;
+  background-color: #fafafa;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  border: 1px solid #cccccc;
+  padding: 5px;
+  font-size: 1.1em;
+}
+ 
+form textarea#message {
+  font-family: sans-serif;
+  width: 500px;
+  height: 100px;
+  background-color: #fafafa;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 1.1em;
+}
+
+form input#name:focus,
+form input#email:focus,
+form input#subject:focus {
+    background-color: #dae4ed;
+}
+ 
+form textarea#message:focus {
+    background-color: #dae4ed;
+}
+ 
+form input#submit {
+  font-family: sans-serif;
+  display: block;
+  -webkit-border-radius: 3px; 
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  border:1px solid #d8d8d8;
+  padding: 10px; 
+  font-weight:bold; 
+  text-align: center; 
+  color: #000000; 
+}
+ 
+form input#submit:hover{
+  cursor: pointer;
+  border:1px solid #c1c1c1; 
+  background-color: #b5b5b5;
+}
+
+/* Message flashing */
+.flash {
+  background-color: #ffb5b5;
+  padding: 10px;
+  width: 400px;
+  border-radius: 5px;
+}
+
+  #loading { 
+    display:none; 
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+    background: black;
+  }

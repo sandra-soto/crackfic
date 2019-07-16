@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<link type="text/css" rel="stylesheet"
@@ -15,21 +16,38 @@
    <body>
       <div class = "center">
         <form action = "/madlib/<fandom>" method = "POST">
-           <span style="font-family:monospace"><h1>Enter your words!</h1></span>
+           <span style="font-family:sans-serif"><h1>Enter your words!</h1></span>
            
              <center><table>
               {% for x in range(rand) %}
                 <tr>
                   <td>
                     <div class = "textbox">
-                      <input type='text' class='input_text' name='input_text[]' id='input_text'>
+                      <p id="demo"></p> 
+
+                      <div class = "swag">
+                        <input type='text' class='input_text' name='input_text[]' id='input_text' placeholder="{{tense[x]}}">
+                        <div class = "yeet">
+                          <button id = {{x}} width="100%" type = "button" onmouseover="myFunction(this)">?</button>  
+                          <script>
+                            function myFunction(elem) {
+                              var i = elem.id
+                              var parsed = JSON.parse('{{examples|tojson}}')
+                              var tensee = JSON.parse('{{tense|tojson}}')
+                              document.getElementById("demo").innerHTML = parsed[tensee[i]];
+                            }
+
+                          </script>
+                        </div>
+                      </div>
                     </div>
                   </td>
                 </tr>
               {% endfor %}
              </table></center>
-
-           <p><input type = "submit" value = "search" /></p>
+           <div class = "final">
+             <p><input type = "submit" name = "butt" value = "search" /></p>
+           </div>
         </form>
       </div>
    </body>

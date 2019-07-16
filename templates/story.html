@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='main.css')}}" /> 
+    <style>
+   	.center {
+   		text-align: center;
+   		padding: 70px 0;
+   	}
+    .story{
+      font-family: sans-serif;
+      font-size: 20px;
+    }
+
+   </style>
+</head>
+  <body>
+      <div class="center">
+        <div class = "story">
+          <p id="vow_p"></p>
+          <script>
+            var vow = {{madlib|tojson}};
+            var wordsToBold= {{bolder|tojson|safe}};
+            console.log('check y: '+ JSON.stringify(wordsToBold));
+            console.log('check y: '+ JSON.stringify(vow));
+
+            function makeBold(input, wordsToBold) {
+                return input.replace(new RegExp('(\\b)(' + Array.prototype.join.call(wordsToBold,'|') + ')(\\b)','ig'), '$1<b>$2</b>$3');
+            }
+
+            document.getElementById("vow_p").innerHTML = makeBold(vow[0], wordsToBold);
+          </script>
+        </div>
+      </div>
+  </body>
+</html>

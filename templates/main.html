@@ -6,10 +6,10 @@
     <style>
    	.center {
    		text-align: center;
-   		padding: 70px 0;
+   		padding: 50px 0;
    	}
    	.titles {
-   		font-family: monospace;
+   		font-family: sans-serif;
    	}
    </style>
 </head>
@@ -17,11 +17,12 @@
     <body>
     	<div class="center">
     		<div class = "titles">
-    			<h1>Welcome to CrackFic what the fuck please center</h1>
+    			<h1>Welcome to CrackFic </h1>
     			<h2>Select a category</h2>
     		</div>
     		<!-- All buttons on front page to redirect -->
 		    <form action = "/search" method = "POST">
+		    <div class = "fandom_buttons">
 		       <p><input type = "submit" name = "searcher" value = "Anime and Manga" /></p>
 		       <p><input type = "submit" name = "searcher" value = "Books and Literature" /></p>
 		       <p><input type = "submit" name = "searcher" value = "Cartoons and Comics and Graphic Novels" /></p>
@@ -33,6 +34,11 @@
 		       <p><input type = "submit" name = "searcher" value = "TV Shows" /></p>
            	   <p><input type = "submit" name = "searcher" value = "Video Games" /></p>
 		       <p><input type = "submit" name = "searcher" value = "Uncategorized Fandoms" /></p>
+		    </div>
+		       <div class = "other_page">
+		       	<input type = "submit" name = "searcher" value = "CONTACT" />
+		       	<input type = "submit" name = "searcher" value = "FAQ" />
+		       </div>
 		    </form>
 		</div>
     </body>
