@@ -1,0 +1,85 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='FAQ.css')}}" /> 
+    <style>
+   	.center {
+   		text-align: center;
+   		padding: 30px 0;
+   	}
+   </style>
+</head>
+<body>
+	<section class="faq-section">
+	    <input type="checkbox" id="q1">
+	    <label for="q1">What is Crackfic?</label>           
+	    <p>Crackfic is a website designed by a small team of UCI students aiming to replicate the popular word game Madlibs. What makes Crackfic unique is the ability to write stories that have a specific theme/media, instead of the typical randomized stories that the traditional Madlibs is known for. A user can pick their favorite book/movie/cartoon/etc and add their own words to change a randomly chosen template/story that is specific towards their interest.</p> 
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q2">
+	    <label for="q2">How does Crackfic work?</label>           
+	    <p>Like the well-known game of Madlibs, Crackfic takes a story that’s already been pre-written and removes random words that can be replaced with whatever the user desires. Crackfic specifies the parts of speech that it will be replacing, also giving examples to aid the user in changing the words. When completed, the words will be bolded in the finished story, allowing users to see their impact and hopefully have a good laugh.</p>
+	    <p>You can search through our available fandoms by narrowing your search with categories and then the fandom itself (categorized by alphabetical order).</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q3">
+	    <label for="q3">What does Crackfic mean?</label>           
+	    <p>The title of Crackfic derives from more the fandom slang for the word “Crack,” which describes fanworks with ridiculous, unbelievable, incredible, or just silly elements. Since the changed stories are likely to become dumb or inheritable, the term Crackfic felt fitting for what is produced.</p> 
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q4">
+	    <label for="q4">Where do the pre-written stories come from?</label>           
+	    <p>With the work of API and web-scraping. The stories from Crackfic derive from the popular fanfiction site: Archive of Our Own. Originally fanfiction.net was our goal, but due to poor algorithm and an API we were not sure how to use, we decided to move onto a website with better control. </p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q5">
+	    <label for="q5">Wait... isn't that illegal?</label>           
+	    <p>No.</p>
+	    <p>Immorally taking, yes. But we are not profiting from the project nor are we claiming any copyright over the fanfictions shown. We try to give credit to all writers that may appear, as well as information to find their story.</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q6">
+	    <label for="q6">What?! How do I take my story off this site?</label>           
+	    <p>That is perfectly reasonable to ask, and we are ready to accommodate. With a few writers in our small group, we understand the potential anger that comes towards us changing your hard-work for giggles and laughs. Feel free to contact us (link below) with your author name, story title, and if possible, story link and we will remove your story(ies) from our database.</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q8">
+	    <label for="q8">You guys are jerks!</label>           
+	    <p>While not a question, feel free to use our contact page (link below) to provide us with the necessary constructive criticism we could use to improve. Or actually you could just hate-mail us, that’s fine too. Yell to your heart’s content.</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q9">
+	    <label for="q9">Why is _____ fandom not here?</label>           
+	    <p>To help diminish the time it takes to scan all of Archive of Our Own, we decided to keep only the fandoms that have more than 200 stories published on the site. This allows us to remove all tiny fandoms that might not even contain what we are searching for. If you would like a fandom to be shown, either write more for it, or contact us (link below) with the fandom you wish to see and we will see from there.</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q10">
+	    <label for="q10">Why is your website so ugly?</label>           
+	    <p>Because the person who is typing this FAQ page made it, and I am currently in the process of studying how to use HTML/CSS and Javascript. This website is a work in progress and hopefully in time it will change to become more aesthetically pleasing. If you have something you think is a good idea to add, contact us (link below) with your ideas.</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q11">
+	    <label for="q11">I think your website would be better with ____.</label>
+	    <p>That's great! Please contact us (link below) with your ideas. As a small team of students (there's only three of us), it would help a lot to see how we can improve our work. Thank you for the help!</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q12">
+	    <label for="q12">This is really cool! How do I tell you?</label>
+	    <p>Our contact page(link below) emails us whatever you want to say, and it would be nice to have something positive once in a while. Thank you for liking the website!</p>
+	</section>
+	<section class="faq-section">
+	    <input type="checkbox" id="q13">
+	    <label for="q13">None of these are my question.</label>
+	    <p>Please contact us (link below) with your question! If the question is asked enough, we will likely put it on this FAQ page for everyone else to see.</p>
+	</section>
+	<div class = "center">
+      <form action = "/FAQ" method = "POST">
+      	<div class = "homeb">
+	         <input type = "submit" name = "blarg" value = "Return to Home" />
+	         <input type = "submit" name = "blarg" value = "Ask a Question" />
+    	</div>
+      </form>
+	</div>
+</body>
+

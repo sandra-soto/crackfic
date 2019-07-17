@@ -36,7 +36,7 @@ def search():
         if request.form['searcher'] == "CONTACT":
             return redirect(url_for('contact'))
         elif request.form['searcher'] == "FAQ":
-            pass
+            return redirect(url_for('FAQ'))
         else:
             search_category = request.form['searcher']
             return redirect(url_for('success', name = search_category.replace(" ", "").lower()))
@@ -60,6 +60,16 @@ def contact():
  
   elif request.method == 'GET':
     return render_template('contact.html', form=form)
+
+@app.route('/FAQ',methods=['GET','POST'])
+def FAQ():
+    if request.method == 'GET':
+        return render_template('FAQ.html')
+    else:
+        if request.form['blarg'] == "Return to Home":
+            return redirect(url_for("main"))
+        elif request.form['blarg'] == "Ask a Question":
+            return redirect(url_for('contact'))
 
 @app.route('/sent',methods=['GET','POST'])
 def sent():
