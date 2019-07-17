@@ -11,12 +11,13 @@ def get_auth_data(url:str) -> dict:
     auth_name = str(final.text)
     another = soup.find("dd", class_ = "words")
     word_count = int(another.text)
-    ##print(word_count)
+    titlesearch = soup.find("h2", class_ = "title heading")
+    title = str(titlesearch.text)
 
-    newdict = {"Author": auth_name, "Redirect": auth_url, "Words": word_count}
+    newdict = {"Title": title, "Author": auth_name, "Redirect": auth_url, "Words": word_count}
 
     return newdict
 
-##get_auth_data('https://archiveofourown.org/works/17740550/chapters/41855435')
+##print(get_auth_data('https://archiveofourown.org/works/17740550/chapters/41855435'))
     
     
