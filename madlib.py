@@ -34,7 +34,7 @@ excluded_pos = [':', '.','.' ',', 'TO', 'IN', 'CC', 'DT', 'EX', 'LS', 'MD', 'PRP
 num_of_changes = {100:6, 200: 7, 300: 9, 400: 11, 500: 13, 600: 14, 700: 16, 800: 18, 900:19, 1000:20}
 
 # tokens we don't want -- tradeoff for using nltk tokenizer
-unwanted_tokens = ['"', "'", ",", "'t", "t", "?", '“', '”', '’', 's']
+unwanted_tokens = ['"', "'", ",", "'t", "t", "?", '“', '”', '’', 's', 'was', 'said', 'is', 'says', 'were']
 
 
 def num_of_repls(text_len:int)-> int:
@@ -43,7 +43,7 @@ def num_of_repls(text_len:int)-> int:
     mod_remainder, div_quotient = text_len%100, text_len//100
     if mod_remainder >= 50: # if larger than 50, round up to next hundred
       div_quotient += 1
-    return num_of_changes[div_quotient * 100]
+    return abs(num_of_changes[div_quotient * 100])
 
 def nltk_pos_tag(tokens:list)-> '{(part_of_speech, word):[indices of occurences]}':
   #used in process() below
@@ -62,9 +62,9 @@ def process(text)-> '{(part_of_speech, word):[indices of occurences]}, [tokens_l
 def cut_pos(pos_dict, text_len:int) -> "[((part_of_speech, word), [occurences])], int":
   #important!, must be run -- not a utility function
   """removes unnecessary keys from pos_dict and returns only the most frequent tokens in a list data structure"""
-  num_changes = num_of_repls(200) # hardcoded story length, should be changed later
+  num_changes = num_of_repls(text_len)
   for i in set(pos_dict.keys()):
-    if (i[0] in excluded_pos or i[1] in unwanted_tokens) == True:
+    if (i[0] in excluded_pos or i[1] in unwanted_tokens or (i[0] == 'VBD' and i[1] == 'had')) == True:
       del pos_dict[(i)]
   return sorted(pos_dict.items(), key=lambda x:len(x[1]), reverse = True)[:num_changes], num_changes
 
@@ -83,20 +83,45 @@ def repl_tokens(pos_list, tokens) -> str:
   return tokens
 
 
+
 def madlib_out(text:str):
+    """returns the words needed to be replaced and their POS"""
     pos_dict,tokens = process(text)
-    pos_list, num_changes = cut_pos(pos_dict, 200)
+    pos_list, num_changes = cut_pos(pos_dict, len(tokens)-50)
     message = []
     for (pos, word), occ_list in pos_list:
         message.append(f"{POS[pos]}")
     return message, num_changes, pos_list, tokens
 
 def madlib_done(new_list, num_changes, pos_list, tokens):
+    """returns newly created madlib"""
     for i in range(0, num_changes):
         (pos, word), occ_list = pos_list[i]
         new_word = new_list[i]
         repl_all(occ_list, tokens, new_word)
-    return " ".join(tokens)
+        
+    def formatter(tokens, remove):
+        new_tokens = []
+        for index, token in enumerate(tokens):
+            # dealing with quotes“ open,,,, ” close
+            if index == len(tokens)-1:
+                new_tokens.append(token)
+            elif token == "”":
+                new_tokens.append(token + " ")
+            elif token == "," and tokens[index+1] == "”":
+                new_tokens.append(token)
+            elif token == ",":
+                new_tokens.append(token + " ")
+            elif token not in remove and tokens[index+1] in remove:
+                new_tokens.append(token)
+            elif token in ["(", "“"]:
+                new_tokens.append(token)
+            else:
+                new_tokens.append(token + " ")     
+                
+        return "".join(new_tokens)
+    
+    return formatter(tokens, [".", "?", ",", '"', "'",',', "!", "-", "⁠—", ")"])
 
 ##
 ##if __name__ == '__main__':
