@@ -1,40 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link type="text/css" rel="stylesheet"
         href="{{ url_for('static',
               filename='alternate.css')}}" />
   <style>
   .center {
     text-align: center;
-    padding: 70px 0;
+    padding: 40px 0;
+  }
+  .testpadding{
+    text-align: center;
+    padding: 70px 10px 0 0;
+  }
+  /* Popup container - can be anything you want */
+  .popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
+  /* The actual popup */
+  .popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 75%;
+    right: 275%;
+    margin-left: -80px;
+  }
+
+
+  /* Toggle this class - hide and show the popup */
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
   </style> 
 </head>
  <!-- connecting the main.css file to this file  in the head -->
    <body>
-      <div class = "center">
         <form action = "/madlib/<fandom>" method = "POST">
+          <div class = "testpadding">
            <span style="font-family:sans-serif"><h1>Enter your words!</h1></span>
-           
+          </div>
+      <div class = "center">           
              <center><table>
               {% for x in range(rand) %}
                 <tr>
                   <td>
                     <div class = "textbox">
-                      <p id="demo"></p> 
 
                       <div class = "swag">
                         <input type='text' class='input_text' name='input_text[]' id='input_text' placeholder="{{tense[x]}}">
                         <div class = "yeet">
-                          <button id = {{x}} width="100%" type = "button" onmouseover="myFunction(this)">?</button>  
+                          <div class ="popup">
+                            <button id = {{x}} width="100%" type = "button" onmouseover="myFunction(this)"onmouseout="myFunction(this)">?</button>
+                            <p class="popuptext" id="demo"></p>   
+                          </div>
                           <script>
                             function myFunction(elem) {
                               var i = elem.id
                               var parsed = JSON.parse('{{examples|tojson}}')
                               var tensee = JSON.parse('{{tense|tojson}}')
-                              document.getElementById("demo").innerHTML = parsed[tensee[i]];
+                              var x = document.getElementById("demo")
+                              if (x.innerHTML === parsed[tensee[i]]){
+                                x.innerHTML = "";
+                                x.classList.toggle("show");
+                              }
+                              else{
+                                x.innerHTML = parsed[tensee[i]];
+                                x.classList.toggle("show");
+                              }
                             }
 
                           </script>
