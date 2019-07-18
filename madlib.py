@@ -87,7 +87,7 @@ def repl_tokens(pos_list, tokens) -> str:
 def madlib_out(text:str):
     """returns the words needed to be replaced and their POS"""
     pos_dict,tokens = process(text)
-    pos_list, num_changes = cut_pos(pos_dict, len(tokens)-200)
+    pos_list, num_changes = cut_pos(pos_dict, len(tokens)-50)
     message = []
     for (pos, word), occ_list in pos_list:
         message.append(f"{POS[pos]}")
