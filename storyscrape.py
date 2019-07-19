@@ -33,7 +33,11 @@ def correct_subcategory_link(subcategory:str): #returns the correct link for sub
 ##    sbc = sbc.replace("&", "*a*")
 ##    sbc = sbc.replace(".", "*d*")
     sbc = urllib.parse.quote(subcategory)
-    return sbc
+##    print(type(sbc))
+    final = sbc.replace('.', '*d*')
+    return final
+
+#print(correct_subcategory_link('aldnoah.zero'))
 
 def random_story_in_page(subcategory:str)-> str:
     subcat = correct_subcategory_link(subcategory)
