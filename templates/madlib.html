@@ -8,11 +8,7 @@
   <style>
   .center {
     text-align: center;
-    padding: 40px 0;
-  }
-  .testpadding{
-    text-align: center;
-    padding: 70px 10px 0 0;
+    padding: 70px 0;
   }
   /* Popup container - can be anything you want */
   .popup {
@@ -28,46 +24,55 @@
   /* The actual popup */
   .popup .popuptext {
     visibility: hidden;
-    width: 160px;
-    background-color: #555;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
     color: #fff;
     text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
     z-index: 1;
-    bottom: 75%;
-    right: 275%;
-    margin-left: -80px;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
   }
 
 
   /* Toggle this class - hide and show the popup */
   .popup .show {
     visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
   }
 
   /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
   }
 
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
   }
   </style> 
 </head>
  <!-- connecting the main.css file to this file  in the head -->
    <body>
+    <div class = "center">    
         <form action = "/madlib/<fandom>" method = "POST">
-          <div class = "testpadding">
            <span style="font-family:sans-serif"><h1>Enter your words!</h1></span>
-          </div>
-      <div class = "center">           
              <center><table>
               {% for x in range(rand) %}
                 <tr>
