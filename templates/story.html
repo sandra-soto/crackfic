@@ -13,24 +13,34 @@
       font-family: sans-serif;
       font-size: 20px;
     }
+    input[type="submit"] {
+        width: 200px;
+        height: 50px;
+        font-size: 20px;
+        font-family: sans-serif;
+        border: none;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+    }
+
+    /* Colors when cursor goes over to signify what it's on */
+    input[type="submit"]:hover { 
+      background-color: #add8e6;
+    }
 
    </style>
 </head>
   <body>
       <div class="center">
         <div class = "story">
-          <p id="vow_p"></p>
-          <script>
-            var vow = {{madlib|tojson}};
-            var wordsToBold= {{bolder|tojson|safe}};
-
-            function makeBold(input, wordsToBold) {
-                return input.replace(new RegExp('(\\b)(' + Array.prototype.join.call(wordsToBold,'|') + ')(\\b)','ig'), '$1<b>$2</b>$3');
-            }
-
-            document.getElementById("vow_p").innerHTML = makeBold(vow[0], wordsToBold);
-          </script>
+          <p>{{madlib|safe}}</p>
+          <div class = "credits">
+            <p> <u>Original title</u>: {{author["Title"]|safe}} &emsp; <u>Author</u>: {{author["Author"]|safe}} &emsp; <u>Word Count</u>: {{author["Words"]|safe}}</p>
+          </div>
         </div>
+        <form action = "/output" method = "POST">
+          <input type = "submit" value = "Return to Home" />
+        </form>
       </div>
   </body>
 </html>

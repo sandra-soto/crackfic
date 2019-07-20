@@ -107,14 +107,16 @@ def madlib(fandom):
         else:
             pass
             
-@app.route('/output')
+@app.route('/output', methods = ['GET','POST'])
 def testinputs():
-    author_data = author.get_auth_data(session['story_url'])
-    madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
-    words = session["word_list"]
-    session.clear()
-    return render_template("story.html",madlib = [madlib], bolder=words)
-
+    if request.method == 'GET':
+        author_data = author.get_auth_data(session['story_url'])
+        madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
+        words = session["word_list"]
+        session.clear()
+        return render_template("story.html",madlib = madlib, author = author_data)
+    if request.method == 'POST':
+        return redirect(url_for("main"))
 
 if __name__ == '__main__':
     app.debug=True # this will give us an error message when the app crashes
