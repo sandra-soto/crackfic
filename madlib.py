@@ -28,7 +28,7 @@ pos_ex = {'cardinal digit ': '(ex: three, 33)', 'adjective ': '(ex: big, tall)',
  'verb, singular present tense ': '(ex: take, burn)', 'verb, 3rd person sing. present ': '(ex: takes shouts, throws)'}
 
 # part-of-speech tags to be excluded
-excluded_pos = [':', '.','.' ',', 'TO', 'IN', 'CC', 'DT', 'EX', 'LS', 'MD', 'PRP', 'PRP$', 'RP', 'WDT', 'WP', 'WP$', 'WRB', 'NNP', 'NNPS']
+excluded_pos = [':', '.','.' ',', 'TO', 'IN', 'CC', 'DT', 'EX', 'LS', 'MD', 'PRP', 'PRP$', 'PDT', 'RP', 'WDT', 'WP', 'WP$', 'WRB', 'NNP', 'NNPS']
 
 # describes how many words will be changed for a given text length
 num_of_changes = {100:6, 200: 7, 300: 9, 400: 11, 500: 13, 600: 14, 700: 16, 800: 18, 900:19, 1000:20}
@@ -73,15 +73,6 @@ def repl_all(occ_list, tokens, new_word)-> None:
   """replaces all occurences of a word in the tokens list"""
   for occurence in occ_list:
     tokens[occurence] = new_word
-    
-def repl_tokens(pos_list, tokens) -> str:
-  #important!, must be run -- not a utility function
-  """prompts the user to replace words and returns the new text"""
-  for (pos, word), occ_list in pos_list:
-    new_word = input(f"gimme a {pos} - a {POS[pos]} -> ")
-    repl_all(occ_list, tokens, new_word)
-  return tokens
-
 
 
 def madlib_out(text:str):
@@ -97,7 +88,7 @@ def madlib_done(new_list, num_changes, pos_list, tokens):
     """returns newly created madlib"""
     for i in range(0, num_changes):
         (pos, word), occ_list = pos_list[i]
-        new_word = new_list[i]
+        new_word = "<b>" + new_list[i] + "</b>" # not sure if it escapes it??
         repl_all(occ_list, tokens, new_word)
         
     def formatter(tokens, remove):
@@ -114,14 +105,18 @@ def madlib_done(new_list, num_changes, pos_list, tokens):
                 new_tokens.append(token + " ")
             elif token not in remove and tokens[index+1] in remove:
                 new_tokens.append(token)
-            elif token in ["(", "“"]:
+            elif token in ["(", "“", "'"]:
+                new_tokens.append(token)
+            elif token == '"' and tokens[index-1] in ["?", ",", "!"]:
+                new_tokens.append(token)
+            elif token == "’" or tokens[index+1] == "’" or tokens[index-1] == "’":
                 new_tokens.append(token)
             else:
                 new_tokens.append(token + " ")     
                 
         return "".join(new_tokens)
     
-    return formatter(tokens, [".", "?", ",", '"', "'",',', "!", "-", "⁠—", ")"])
+    return formatter(tokens, [":", ".", "?", ",", '"', "'",',', "!", "-", "⁠—", ")"])
 
 ##
 ##if __name__ == '__main__':

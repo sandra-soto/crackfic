@@ -1,6 +1,7 @@
 import storyscrape as sc
 import flask
 import random
+import author
 from flask import request, redirect, url_for, jsonify, render_template, session, flash
 from forms import ContactForm
 from flask_mail import Message, Mail
@@ -94,7 +95,7 @@ def success(name):
 def madlib(fandom):
     if request.method == 'GET':
         session['fandom'] = fandom
-        scraped_story = sc.random_story_in_page(fandom)
+        scraped_story, session['story_url'] = sc.random_story_in_page(fandom)
         session['msg'], session['num_changes'], session['pos_list'], session['tokens'] = ml.madlib_out(scraped_story)
         return render_template('madlib.html',rand = session['num_changes'],
                                tense = session['msg'], examples = ml.pos_ex) #creates random number of input boxes from 1-20
@@ -108,6 +109,7 @@ def madlib(fandom):
             
 @app.route('/output')
 def testinputs():
+    author_data = author.get_auth_data(session['story_url'])
     madlib =  ml.madlib_done(session["word_list"],session['num_changes'], session['pos_list'], session['tokens'])
     words = session["word_list"]
     session.clear()

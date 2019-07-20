@@ -1,7 +1,5 @@
 import urllib.request
 import urllib
-#from collections import defaultdict
-#from fanfiction import Scraper
 from bs4 import BeautifulSoup
 from random import randint
 import requests
@@ -43,7 +41,8 @@ def random_story_in_page(subcategory:str)-> str:
     subcat = correct_subcategory_link(subcategory)
     story_ids = generate_url(retrieve_story(subcat), subcat)
     print(story_ids)
-    return get_story_text(story_ids[randint(0, len(story_ids)-1)])
+    random_story = story_ids[randint(0, len(story_ids)-1)]
+    return get_story_text(random_story), random_story
 ##    ranstory = correct_subcategory_link(subcategory)
 ##    return test_function(ranstory) #replaced the youtube thing with an archive link
     #returns a random story from a page, given category and subcategory
