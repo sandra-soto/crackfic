@@ -16,8 +16,8 @@ app.secret_key = 'why'
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = 'smthmoreclever@gmail.com'
-app.config["MAIL_PASSWORD"] = 'covenanT710!'
+app.config["MAIL_USERNAME"] = 'crackfic.emails@gmail.com'
+app.config["MAIL_PASSWORD"] = 'SomeBSPass123!'
  
 mail.init_app(app)
 
@@ -51,7 +51,7 @@ def contact():
     if form.validate() == False:
       return render_template('contact.html', form=form)
     else:
-      msg = Message("Crackfic: " + form.subject.data, sender='smthmoreclever@gmail.com', recipients=['smthmoreclever@gmail.com'])
+      msg = Message("Crackfic: " + form.subject.data, sender='crackfic.emails@gmail.com', recipients=['smthmoreclever@gmail.com'])
       msg.body = """
       From: %s <%s>
       %s
